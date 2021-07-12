@@ -8,6 +8,7 @@ class Cryptobot(Base):
     __tablename__ = "cryptobots"
 
     id = Column(Integer, primary_key=True, index=True)
+    customer = Column(String)
     binance_api_url = Column(String, default="https://api.binance.com")
     binance_api_key = Column(String, nullable=False)
     binance_api_secret = Column(String, nullable=False)
@@ -18,6 +19,8 @@ class Cryptobot(Base):
     binance_config_verbose = Column(Boolean, default=True)
     binance_config_graphs = Column(Boolean, default=False)
     binance_config_buymaxsize = Column(Float, nullable=False)
+    binance_config_sellupperpcnt = Column(Float, nullable=False)
+    binance_config_selllowerpcnt = Column(Float, nullable=False)
     logger_filelog = Column(Boolean, default=False)
     logger_logfile = Column(String, default="pycryptobot.log")
     logger_fileloglevel = Column(String, default="INFO")

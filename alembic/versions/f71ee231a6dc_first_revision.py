@@ -37,6 +37,7 @@ def upgrade():
         'cryptobots',
         Column('id', Integer, primary_key=True, index=True),
         
+        Column('customer', String),
         Column('binance_api_url', String),
         Column('binance_api_key', String),
         Column('binance_api_secret', String),
@@ -47,6 +48,8 @@ def upgrade():
         Column('binance_config_verbose', Boolean),
         Column('binance_config_graphs', Boolean),
         Column('binance_config_buymaxsize', Float),
+        Column('binance_config_sellupperpcnt', Float),
+        Column('binance_config_selllowerpcnt', Float),
         Column('logger_filelog', Boolean),
         Column('logger_logfile', String),
         Column('logger_fileloglevel', String),

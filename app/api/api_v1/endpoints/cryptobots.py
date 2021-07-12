@@ -2,11 +2,13 @@ from datetime import datetime, date
 from dateutil.relativedelta import relativedelta
 import json
 import math
+import requests
 
 from typing import Any, List, Optional, Dict
 
 from fastapi import APIRouter, Depends, HTTPException, Query, Request, Response
 from sqlalchemy.orm import Session
+from app.core.config import settings
 
 from app import crud, models, schemas
 from app.api import deps
@@ -30,9 +32,7 @@ def read_cryptobots(
         cryptobots = crud.cryptobot.get_multi_by_user(
             db=db, user_id=current_user.id, skip=skip, limit=limit
         )
-    # for cryptobot in cryptobots:
-    #     tmp = json.loads(cryptobot["weekdays"])
-    #     cryptobot["weekdays"] = tmp
+
     return cryptobots
 
 
@@ -50,8 +50,24 @@ def create_cryptobot(
         pass
     else:
         raise HTTPException(status_code=400, detail="User not found")
+    
+    post_data = {}
+    for key,val in cryptobot_in.__dict__.items():
+        if isinstance(val, bool) and val:
+            post_data[key] = 1
+        elif isinstance(val, bool) and not val:
+            post_data[key] = 0
+        else:
+            post_data[key] = val
+
+    r = requests.post(
+        f"{settings.CONTROLLER_URL}/operator/bot/",
+        json = post_data,
+        headers = {}
+    )
     cryptobot = crud.cryptobot.create_with_owner(
         db=db, obj_in=cryptobot_in, user_id=current_user.id)
+
     return cryptobot
 
 
@@ -67,12 +83,14 @@ def update_cryptobot(
     Update an cryptobot.
     """
     cryptobot = crud.cryptobot.get(db=db, id=id)
+
     if not cryptobot:
         raise HTTPException(status_code=404, detail="Cryptobot not found")
     if (not crud.user.is_superuser(current_user) and
             (cryptobot.user_id != current_user.id)):
         raise HTTPException(status_code=400, detail="Not enough permissions")
     cryptobot = crud.cryptobot.update(db=db, db_obj=cryptobot, obj_in=cryptobot_in)
+
     return cryptobot
 
 
@@ -87,11 +105,13 @@ def read_cryptobot(
     Get cryptobot by ID.
     """
     cryptobot = crud.cryptobot.get(db=db, id=id)
+
     if not cryptobot:
         raise HTTPException(status_code=404, detail="Cryptobot not found")
     if (not crud.user.is_superuser(current_user) and
             (cryptobot.user_id != current_user.id)):
         raise HTTPException(status_code=400, detail="Not enough permissions")
+
     return cryptobot
 
 
@@ -106,10 +126,18 @@ def delete_cryptobot(
     Delete an cryptobot.
     """
     cryptobot = crud.cryptobot.get(db=db, id=id)
+
     if not cryptobot:
         raise HTTPException(status_code=404, detail="Cryptobot not found")
     if (not crud.user.is_superuser(current_user) and
             (cryptobot.user_id != current_user.id)):
         raise HTTPException(status_code=400, detail="Not enough permissions")
+
+    bot_name = f"{current_user.id}-{cryptobot.binance_config_base_currency}{cryptobot.binance_config_quote_currency}"
+    r = requests.delete(
+        f"{settings.CONTROLLER_URL}/operator/bot/{bot_name}",
+        headers = {}
+    )
     cryptobot = crud.cryptobot.remove(db=db, id=id)
+
     return cryptobot

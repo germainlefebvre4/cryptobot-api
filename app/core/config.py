@@ -26,6 +26,8 @@ class Settings(BaseSettings):
     PROJECT_NAME: str = "pycryptobot-api"
     SENTRY_DSN: Optional[HttpUrl] = ""
 
+    CONTROLLER_URL: str
+
     @validator("SENTRY_DSN", pre=True)
     def sentry_dsn_can_be_blank(cls, v: str) -> Optional[str]:
         if len(v) == 0:
