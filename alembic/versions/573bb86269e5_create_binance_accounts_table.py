@@ -26,6 +26,8 @@ def upgrade():
         Column('binance_api_key', String, unique=True),
         Column('binance_api_secret', String),
         
+        Column('created_on', DateTime),
+        Column('updated_on', DateTime),
         Column(
             'user_id', Integer,
             ForeignKey(
