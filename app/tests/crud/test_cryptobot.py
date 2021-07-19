@@ -7,7 +7,7 @@ from sqlalchemy.orm import Session
 
 from app import crud
 from app.schemas.cryptobot import CryptobotCreate, CryptobotUpdate
-from app.schemas.cryptobot import binance, logger, telegram
+from app.schemas.binance_account import BinanceAccount #, logger, telegram
 from app.tests.utils.utils import (
     random_int_range, random_float_range,
     random_lower_string)

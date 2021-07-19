@@ -23,7 +23,6 @@ class BinanceAccountUpdate(BaseModel):
 
 class BinanceAccountDelete(BinanceAccountBase):
     id: int
-    user_id: int
 
     class Config:
         orm_mode = True
@@ -31,8 +30,6 @@ class BinanceAccountDelete(BinanceAccountBase):
 
 class BinanceAccountInDBBase(BinanceAccountBase):
     id: int
-    user_id: int
-    user: User
     
     created_on: Optional[datetime]
     updated_on: Optional[datetime]

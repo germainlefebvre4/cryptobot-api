@@ -37,9 +37,9 @@ class Settings(BaseSettings):
 
     POSTGRES_SERVER: str = os.getenv("POSTGRES_USER", "localhost")
     POSTGRES_PORT: str = os.getenv("POSTGRES_PORT", "5432")
-    POSTGRES_USER: str = os.getenv("POSTGRES_USER", "pycryptobot")
-    POSTGRES_PASSWORD: str = os.getenv("POSTGRES_USER", "pycryptobot")
-    POSTGRES_DB: str = os.getenv("POSTGRES_USER", "pycryptobot")
+    POSTGRES_USER: str = os.getenv("POSTGRES_USER", "cryptobot")
+    POSTGRES_PASSWORD: str = os.getenv("POSTGRES_USER", "cryptobot")
+    POSTGRES_DB: str = os.getenv("POSTGRES_USER", "cryptobot")
     SQLALCHEMY_DATABASE_URI: Optional[PostgresDsn] = None
 
     @validator("SQLALCHEMY_DATABASE_URI", pre=True)
