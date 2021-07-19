@@ -8,6 +8,8 @@ class BinanceAccount(Base):
     __tablename__ = "binance_accounts"
 
     id = Column(Integer, primary_key=True, index=True)
+    
+    binance_api_url = Column(String, nullable=False)
     binance_api_key = Column(String, unique=True, index=True, nullable=False)
     binance_api_secret = Column(String, index=True, nullable=False)
 
