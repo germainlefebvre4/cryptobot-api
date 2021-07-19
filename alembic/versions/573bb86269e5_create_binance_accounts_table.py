@@ -23,6 +23,7 @@ def upgrade():
         'binance_accounts',
         Column('id', Integer, primary_key=True, index=True),
 
+        Column('binance_api_url', String, nullable=False),
         Column('binance_api_key', String, unique=True),
         Column('binance_api_secret', String),
         
