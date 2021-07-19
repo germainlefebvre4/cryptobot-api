@@ -9,9 +9,6 @@ class Cryptobot(Base):
 
     id = Column(Integer, primary_key=True, index=True)
     customer = Column(String)
-    binance_api_url = Column(String, default="https://api.binance.com")
-    binance_api_key = Column(String, nullable=False)
-    binance_api_secret = Column(String, nullable=False)
     binance_config_base_currency = Column(String, nullable=False)
     binance_config_quote_currency = Column(String, nullable=False)
     binance_config_granularity = Column(String, default="15m")
