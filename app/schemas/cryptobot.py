@@ -3,13 +3,11 @@ from datetime import date, datetime
 
 from pydantic import BaseModel
 from app.schemas.user import User
+from app.schemas.binance_account import BinanceAccount
 
 
 class CryptobotBase(BaseModel):
     customer: str
-    binance_api_url: str = "https://api.binance.com"
-    binance_api_key: str
-    binance_api_secret: str
     binance_config_base_currency: str
     binance_config_quote_currency: str
     binance_config_granularity: str = "15m"
@@ -33,8 +31,6 @@ class CryptobotCreate(CryptobotBase):
 
 
 class CryptobotUpdate(BaseModel):
-    binance_api_key: str
-    binance_api_secret: str
     binance_config_granularity: str = "15m"
     binance_config_live: bool = False
     binance_config_verbose : bool = True
@@ -54,6 +50,7 @@ class CryptobotUpdate(BaseModel):
 class CryptobotDelete(CryptobotBase):
     id: int
     user_id: int
+    binance_account_id: int
 
     class Config:
         orm_mode = True
@@ -63,7 +60,9 @@ class CryptobotInDBBase(CryptobotBase):
     id: int
     user_id: int
     user: User
-    
+    binance_account_id: int
+    binance_account: BinanceAccount
+
     created_on: Optional[datetime]
     updated_on: Optional[datetime]
 

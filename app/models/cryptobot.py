@@ -36,5 +36,10 @@ class Cryptobot(Base):
         Integer,
         ForeignKey("users.id", ondelete='CASCADE'),
         nullable=False)
+    binance_account_id = Column(
+        Integer,
+        ForeignKey("binance_accounts.id", ondelete='CASCADE'),
+        nullable=True)
 
     user = relationship("User", foreign_keys=[user_id])
+    binance_account = relationship("BinanceAccount", foreign_keys=[binance_account_id])
