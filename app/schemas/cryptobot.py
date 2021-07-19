@@ -7,7 +7,7 @@ from app.schemas.binance_account import BinanceAccount
 
 
 class CryptobotBase(BaseModel):
-    customer: str
+    # customer: str
     binance_config_base_currency: str
     binance_config_quote_currency: str
     binance_config_granularity: str = "15m"

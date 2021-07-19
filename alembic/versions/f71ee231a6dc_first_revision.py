@@ -37,7 +37,7 @@ def upgrade():
         'cryptobots',
         Column('id', Integer, primary_key=True, index=True),
         
-        Column('customer', String),
+        # Column('customer', String),
         Column('binance_api_url', String),
         Column('binance_api_key', String),
         Column('binance_api_secret', String),

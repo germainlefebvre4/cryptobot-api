@@ -14,11 +14,13 @@ from app.schemas.cryptobot import CryptobotCreate, CryptobotUpdate
 
 class CRUDCryptobot(CRUDBase[Cryptobot, CryptobotCreate, CryptobotUpdate]):
     def create_with_owner(
-        self, db: Session, *, obj_in: CryptobotCreate, user_id: int,
+        self, db: Session, *, obj_in: CryptobotCreate,
+        user_id: int, binance_account_id: int,
     ) -> Cryptobot:
         obj_in_data = jsonable_encoder(obj_in)
         created_on = datetime.now()
-        db_obj = self.model(**obj_in_data, user_id=user_id,
+        db_obj = self.model(**obj_in_data,
+            user_id=user_id, binance_account_id=binance_account_id,
             created_on=created_on)
         db.add(db_obj)
         db.commit()
