@@ -7,20 +7,18 @@ from fastapi.encoders import jsonable_encoder
 from sqlalchemy.orm import Session
 
 from app.crud.base import CRUDBase
-from app.models.cryptobot import Cryptobot
+from app.models.binance_account import BinanceAccount
 from app.models.user import User
-from app.schemas.cryptobot import CryptobotCreate, CryptobotUpdate
+from app.schemas.binance_account import BinanceAccountCreate, BinanceAccountUpdate
 
 
-class CRUDCryptobot(CRUDBase[Cryptobot, CryptobotCreate, CryptobotUpdate]):
+class CRUDBinanceAccount(CRUDBase[BinanceAccount, BinanceAccountCreate, BinanceAccountUpdate]):
     def create_with_owner(
-        self, db: Session, *, obj_in: CryptobotCreate,
-        user_id: int, binance_account_id: int,
-    ) -> Cryptobot:
+        self, db: Session, *, obj_in: BinanceAccountCreate, user_id: int,
+    ) -> BinanceAccount:
         obj_in_data = jsonable_encoder(obj_in)
         created_on = datetime.now()
-        db_obj = self.model(**obj_in_data,
-            user_id=user_id, binance_account_id=binance_account_id,
+        db_obj = self.model(**obj_in_data, user_id=user_id,
             created_on=created_on)
         db.add(db_obj)
         db.commit()
@@ -29,7 +27,7 @@ class CRUDCryptobot(CRUDBase[Cryptobot, CryptobotCreate, CryptobotUpdate]):
 
     def get_multi(
         self, db: Session, *, skip: int = 0, limit: int = 100
-    ) -> List[Cryptobot]:
+    ) -> List[BinanceAccount]:
         return (
             db.query(self.model)
             .offset(skip)
@@ -39,11 +37,11 @@ class CRUDCryptobot(CRUDBase[Cryptobot, CryptobotCreate, CryptobotUpdate]):
 
     def get_multi_by_user(
         self, db: Session, *, user_id: int, skip: int = 0, limit: int = 100
-    ) -> List[Cryptobot]:
+    ) -> List[BinanceAccount]:
         return (
             db.query(self.model)
-            .join(Cryptobot.user)
-            .filter(Cryptobot.user_id == user_id)
+            .join(BinanceAccount.user)
+            .filter(BinanceAccount.user_id == user_id)
             .offset(skip)
             .limit(limit)
             .all()
@@ -53,9 +51,9 @@ class CRUDCryptobot(CRUDBase[Cryptobot, CryptobotCreate, CryptobotUpdate]):
         self,
         db: Session,
         *,
-        db_obj: Cryptobot,
-        obj_in: Union[CryptobotUpdate, Dict[str, Any]]
-    ) -> Cryptobot:
+        db_obj: BinanceAccount,
+        obj_in: Union[BinanceAccountUpdate, Dict[str, Any]]
+    ) -> BinanceAccount:
         obj_data = jsonable_encoder(db_obj)
         updated_on = datetime.now()
         if isinstance(obj_in, dict):
@@ -71,4 +69,4 @@ class CRUDCryptobot(CRUDBase[Cryptobot, CryptobotCreate, CryptobotUpdate]):
         db.refresh(db_obj)
         return db_obj
 
-cryptobot = CRUDCryptobot(Cryptobot)
+binance_account = CRUDBinanceAccount(BinanceAccount)

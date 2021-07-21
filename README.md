@@ -1,4 +1,4 @@
-# pycryptobot API
+# Cryptobot API
 
 API to run inside BSP Auto project.
 
@@ -43,7 +43,7 @@ pipenv update --dev
 ```
 
 ### Run locally
-This section use docker database called `pycryptobot`.
+This section use docker database called `cryptobot`.
 ```bash
 docker-compose up -d
 pipenv run python app/initial_data.py
@@ -51,7 +51,7 @@ pipenv run uvicorn app.main:app --port=8080 --reload
 ```
 
 ### Run tests
-This section use docker database called `pycryptobot_test`.
+This section use docker database called `cryptobot_test`.
 ```bash
 docker-compose up -d
 pipenv run pytest -sv app/tests/

@@ -8,10 +8,7 @@ class Cryptobot(Base):
     __tablename__ = "cryptobots"
 
     id = Column(Integer, primary_key=True, index=True)
-    customer = Column(String)
-    binance_api_url = Column(String, default="https://api.binance.com")
-    binance_api_key = Column(String, nullable=False)
-    binance_api_secret = Column(String, nullable=False)
+    # customer = Column(String)
     binance_config_base_currency = Column(String, nullable=False)
     binance_config_quote_currency = Column(String, nullable=False)
     binance_config_granularity = Column(String, default="15m")
@@ -36,5 +33,10 @@ class Cryptobot(Base):
         Integer,
         ForeignKey("users.id", ondelete='CASCADE'),
         nullable=False)
+    binance_account_id = Column(
+        Integer,
+        ForeignKey("binance_accounts.id", ondelete='CASCADE'),
+        nullable=True)
 
     user = relationship("User", foreign_keys=[user_id])
+    binance_account = relationship("BinanceAccount", foreign_keys=[binance_account_id])

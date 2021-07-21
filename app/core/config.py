@@ -24,7 +24,7 @@ class Settings(BaseSettings):
             return v
         raise ValueError(v)
 
-    PROJECT_NAME: str = "pycryptobot-api"
+    PROJECT_NAME: str = "cryptobot-api"
     SENTRY_DSN: Optional[HttpUrl] = ""
 
     CONTROLLER_URL: str
@@ -37,9 +37,9 @@ class Settings(BaseSettings):
 
     POSTGRES_SERVER: str = os.getenv("POSTGRES_USER", "localhost")
     POSTGRES_PORT: str = os.getenv("POSTGRES_PORT", "5432")
-    POSTGRES_USER: str = os.getenv("POSTGRES_USER", "pycryptobot")
-    POSTGRES_PASSWORD: str = os.getenv("POSTGRES_USER", "pycryptobot")
-    POSTGRES_DB: str = os.getenv("POSTGRES_USER", "pycryptobot")
+    POSTGRES_USER: str = os.getenv("POSTGRES_USER", "cryptobot")
+    POSTGRES_PASSWORD: str = os.getenv("POSTGRES_USER", "cryptobot")
+    POSTGRES_DB: str = os.getenv("POSTGRES_USER", "cryptobot")
     SQLALCHEMY_DATABASE_URI: Optional[PostgresDsn] = None
 
     @validator("SQLALCHEMY_DATABASE_URI", pre=True)
@@ -81,11 +81,11 @@ class Settings(BaseSettings):
             and values.get("EMAILS_FROM_EMAIL")
         )
 
-    USER_TEST_EMAIL: EmailStr = "test@pycryptobot.fr"
+    USER_TEST_EMAIL: EmailStr = "test@cryptobot.fr"
     USER_TEST_FIRSTNAME: str = "Test"
     USER_TEST_PASSWORD: str = "test"
 
-    USER_ADMIN_EMAIL: EmailStr = "admin@pycryptobot.fr"
+    USER_ADMIN_EMAIL: EmailStr = "admin@cryptobot.fr"
     USER_ADMIN_FIRSTNAME: str = "Admin"
     USER_ADMIN_PASSWORD: str = "admin"
 

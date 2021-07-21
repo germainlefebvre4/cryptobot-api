@@ -1,6 +1,7 @@
+import sys
 from datetime import datetime, date
 from dateutil.relativedelta import relativedelta
-import json
+# import json
 import math
 import requests
 
@@ -12,6 +13,9 @@ from app.core.config import settings
 
 from app import crud, models, schemas
 from app.api import deps
+
+from app.api import services
+
 
 router = APIRouter()
 
@@ -40,18 +44,28 @@ def read_cryptobots(
 def create_cryptobot(
     *,
     db: Session = Depends(deps.get_db),
+    binance_account_id: int,
     cryptobot_in: schemas.CryptobotCreate,
     current_user: models.User = Depends(deps.get_current_active_user),
 ) -> Any:
     """
     Create new cryptobot.
     """
-    if crud.user.get(db, id=current_user.id) or crud.user.get(db, id=current_user.id):
+    if crud.user.get(db, id=current_user.id):
         pass
     else:
         raise HTTPException(status_code=400, detail="User not found")
+
+    binance_account = crud.binance_account.get(db, id=binance_account_id)
+    if binance_account:
+        pass
+    else:
+        raise HTTPException(status_code=400, detail="Binance Account not found")
     
     post_data = {}
+    post_data['user_id'] = current_user.id
+    post_data['binance_api_key'] = binance_account.binance_api_key
+    post_data['binance_api_secret'] = binance_account.binance_api_secret
     for key,val in cryptobot_in.__dict__.items():
         if isinstance(val, bool) and val:
             post_data[key] = 1
@@ -60,13 +74,11 @@ def create_cryptobot(
         else:
             post_data[key] = val
 
-    r = requests.post(
-        f"{settings.CONTROLLER_URL}/operator/bot/",
-        json = post_data,
-        headers = {}
-    )
+    services.create_operator_bot(post_data)
+
     cryptobot = crud.cryptobot.create_with_owner(
-        db=db, obj_in=cryptobot_in, user_id=current_user.id)
+        db=db, obj_in=cryptobot_in,
+        user_id=current_user.id, binance_account_id=binance_account_id)
 
     return cryptobot
 
@@ -134,10 +146,8 @@ def delete_cryptobot(
         raise HTTPException(status_code=400, detail="Not enough permissions")
 
     bot_name = f"{current_user.id}-{cryptobot.binance_config_base_currency}{cryptobot.binance_config_quote_currency}"
-    r = requests.delete(
-        f"{settings.CONTROLLER_URL}/operator/bot/{bot_name}",
-        headers = {}
-    )
+    services.delete_operator_bot(bot_name)
+    
     cryptobot = crud.cryptobot.remove(db=db, id=id)
 
     return cryptobot
