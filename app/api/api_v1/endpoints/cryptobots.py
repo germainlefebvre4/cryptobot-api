@@ -56,12 +56,16 @@ def create_cryptobot(
     else:
         raise HTTPException(status_code=400, detail="User not found")
 
-    if crud.binance_account.get(db, id=binance_account_id):
+    binance_account = crud.binance_account.get(db, id=binance_account_id)
+    if binance_account:
         pass
     else:
         raise HTTPException(status_code=400, detail="Binance Account not found")
     
     post_data = {}
+    post_data['user_id'] = current_user.id
+    post_data['binance_api_key'] = binance_account.binance_api_key
+    post_data['binance_api_secret'] = binance_account.binance_api_secret
     for key,val in cryptobot_in.__dict__.items():
         if isinstance(val, bool) and val:
             post_data[key] = 1
