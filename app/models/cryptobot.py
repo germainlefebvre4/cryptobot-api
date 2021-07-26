@@ -8,7 +8,6 @@ class Cryptobot(Base):
     __tablename__ = "cryptobots"
 
     id = Column(Integer, primary_key=True, index=True)
-    # customer = Column(String)
     binance_config_base_currency = Column(String, nullable=False)
     binance_config_quote_currency = Column(String, nullable=False)
     binance_config_granularity = Column(String, default="15m")

@@ -13,14 +13,13 @@ from app.tests.utils.utils import (
     random_lower_string)
 
 from app.tests.utils.user import create_random_user
+from app.tests.utils.binance_account import create_random_binance_account
 
 
 def test_create_cryptobot(db: Session) -> None:
     user = create_random_user(db)
+    binance_account = create_random_binance_account(db, user_id=user.id)
 
-    binance_api_url = "https://api.binance.com"
-    binance_api_key = "xxxxxxxxxxxxxxxxxxx"
-    binance_api_secret = "xxxxxxxxxxxxxxxxxxx"
     binance_config_base_currency = "BTC"
     binance_config_quote_currency = "EUR"
     binance_config_granularity = "15m"
@@ -28,6 +27,8 @@ def test_create_cryptobot(db: Session) -> None:
     binance_config_verbose = True
     binance_config_graphs = False
     binance_config_buymaxsize = 0.0004
+    binance_config_sellupperpcnt = 10
+    binance_config_selllowerpcnt = -10
     logger_filelog = True
     logger_logfile = "pycryptobot.log"
     logger_fileloglevel = "DEBUG"
@@ -37,26 +38,22 @@ def test_create_cryptobot(db: Session) -> None:
     telegram_token = "xxxxxx"
 
     cryptobot_in = CryptobotCreate(
-        binance_api_url=binance_api_url, binance_api_key=binance_api_key,
-        binance_api_secret=binance_api_secret, binance_config_base_currency=binance_config_base_currency,
-        binance_config_quote_currency=binance_config_quote_currency,
+        binance_config_base_currency=binance_config_base_currency, binance_config_quote_currency=binance_config_quote_currency,
         binance_config_granularity=binance_config_granularity, binance_config_live=binance_config_live,
         binance_config_verbose=binance_config_verbose, binance_config_graphs=binance_config_graphs,
-        binance_config_buymaxsize=binance_config_buymaxsize, logger_filelog=logger_filelog,
-        logger_logfile=logger_logfile, logger_fileloglevel=logger_fileloglevel,
+        binance_config_buymaxsize=binance_config_buymaxsize,
+        binance_config_sellupperpcnt=binance_config_sellupperpcnt, binance_config_selllowerpcnt=binance_config_selllowerpcnt,
+        logger_filelog=logger_filelog, logger_logfile=logger_logfile, logger_fileloglevel=logger_fileloglevel,
         logger_consolelog=logger_consolelog, logger_consoleloglevel=logger_consoleloglevel,
         telegram_client_id=telegram_client_id, telegram_token=telegram_token)
     
     cryptobot = crud.cryptobot.create_with_owner(
-        db=db, obj_in=cryptobot_in, user_id=user.id)
+        db=db, obj_in=cryptobot_in, user_id=user.id, binance_account_id=binance_account.id)
 
     assert cryptobot.user_id == user.id
     assert cryptobot.user.id == user.id
     assert cryptobot.user.firstname == user.firstname
     assert cryptobot.user.email == user.email
-    assert cryptobot.binance_api_url == binance_api_url
-    assert cryptobot.binance_api_key == binance_api_key
-    assert cryptobot.binance_api_secret == binance_api_secret
     assert cryptobot.binance_config_base_currency == binance_config_base_currency
     assert cryptobot.binance_config_quote_currency == binance_config_quote_currency
     assert cryptobot.binance_config_granularity == binance_config_granularity
@@ -77,10 +74,8 @@ def test_create_cryptobot(db: Session) -> None:
 
 def test_get_cryptobot(db: Session) -> None:
     user = create_random_user(db)
+    binance_account = create_random_binance_account(db, user_id=user.id)
 
-    binance_api_url = "https://api.binance.com"
-    binance_api_key = "xxxxxxxxxxxxxxxxxxx"
-    binance_api_secret = "xxxxxxxxxxxxxxxxxxx"
     binance_config_base_currency = "BTC"
     binance_config_quote_currency = "EUR"
     binance_config_granularity = "15m"
@@ -88,6 +83,8 @@ def test_get_cryptobot(db: Session) -> None:
     binance_config_verbose = True
     binance_config_graphs = False
     binance_config_buymaxsize = 0.0004
+    binance_config_sellupperpcnt = 10
+    binance_config_selllowerpcnt = -10
     logger_filelog = True
     logger_logfile = "pycryptobot.log"
     logger_fileloglevel = "DEBUG"
@@ -97,18 +94,17 @@ def test_get_cryptobot(db: Session) -> None:
     telegram_token = "xxxxxx"
 
     cryptobot_in = CryptobotCreate(
-        binance_api_url=binance_api_url, binance_api_key=binance_api_key,
-        binance_api_secret=binance_api_secret, binance_config_base_currency=binance_config_base_currency,
-        binance_config_quote_currency=binance_config_quote_currency,
+        binance_config_base_currency=binance_config_base_currency, binance_config_quote_currency=binance_config_quote_currency,
         binance_config_granularity=binance_config_granularity, binance_config_live=binance_config_live,
         binance_config_verbose=binance_config_verbose, binance_config_graphs=binance_config_graphs,
-        binance_config_buymaxsize=binance_config_buymaxsize, logger_filelog=logger_filelog,
-        logger_logfile=logger_logfile, logger_fileloglevel=logger_fileloglevel,
+        binance_config_buymaxsize=binance_config_buymaxsize,
+        binance_config_sellupperpcnt=binance_config_sellupperpcnt, binance_config_selllowerpcnt=binance_config_selllowerpcnt,
+        logger_filelog=logger_filelog, logger_logfile=logger_logfile, logger_fileloglevel=logger_fileloglevel,
         logger_consolelog=logger_consolelog, logger_consoleloglevel=logger_consoleloglevel,
         telegram_client_id=telegram_client_id, telegram_token=telegram_token)
     
     cryptobot = crud.cryptobot.create_with_owner(
-        db=db, obj_in=cryptobot_in, user_id=user.id)
+        db=db, obj_in=cryptobot_in, user_id=user.id, binance_account_id=binance_account.id)
     stored_cryptobots = crud.cryptobot.get(db=db, id=cryptobot.id)
 
     assert stored_cryptobots
@@ -117,9 +113,6 @@ def test_get_cryptobot(db: Session) -> None:
     assert cryptobot.user.id == stored_cryptobots.user.id
     assert cryptobot.user.firstname == stored_cryptobots.user.firstname
     assert cryptobot.user.email == stored_cryptobots.user.email
-    assert cryptobot.binance_api_url == stored_cryptobots.binance_api_url
-    assert cryptobot.binance_api_key == stored_cryptobots.binance_api_key
-    assert cryptobot.binance_api_secret == stored_cryptobots.binance_api_secret
     assert cryptobot.binance_config_base_currency == stored_cryptobots.binance_config_base_currency
     assert cryptobot.binance_config_quote_currency == stored_cryptobots.binance_config_quote_currency
     assert cryptobot.binance_config_granularity == stored_cryptobots.binance_config_granularity
@@ -140,10 +133,8 @@ def test_get_cryptobot(db: Session) -> None:
 
 def test_get_cryptobots_with_user(db: Session) -> None:
     user = create_random_user(db)
+    binance_account = create_random_binance_account(db, user_id=user.id)
 
-    binance_api_url = "https://api.binance.com"
-    binance_api_key = "xxxxxxxxxxxxxxxxxxx"
-    binance_api_secret = "xxxxxxxxxxxxxxxxxxx"
     binance_config_base_currency = "BTC"
     binance_config_quote_currency = "EUR"
     binance_config_granularity = "15m"
@@ -151,6 +142,8 @@ def test_get_cryptobots_with_user(db: Session) -> None:
     binance_config_verbose = True
     binance_config_graphs = False
     binance_config_buymaxsize = 0.0004
+    binance_config_sellupperpcnt = 10
+    binance_config_selllowerpcnt = -10
     logger_filelog = True
     logger_logfile = "pycryptobot.log"
     logger_fileloglevel = "DEBUG"
@@ -160,19 +153,18 @@ def test_get_cryptobots_with_user(db: Session) -> None:
     telegram_token = "xxxxxx"
 
     cryptobot_in = CryptobotCreate(
-        binance_api_url=binance_api_url, binance_api_key=binance_api_key,
-        binance_api_secret=binance_api_secret, binance_config_base_currency=binance_config_base_currency,
-        binance_config_quote_currency=binance_config_quote_currency,
+        binance_config_base_currency=binance_config_base_currency, binance_config_quote_currency=binance_config_quote_currency,
         binance_config_granularity=binance_config_granularity, binance_config_live=binance_config_live,
         binance_config_verbose=binance_config_verbose, binance_config_graphs=binance_config_graphs,
-        binance_config_buymaxsize=binance_config_buymaxsize, logger_filelog=logger_filelog,
-        logger_logfile=logger_logfile, logger_fileloglevel=logger_fileloglevel,
+        binance_config_buymaxsize=binance_config_buymaxsize,
+        binance_config_sellupperpcnt=binance_config_sellupperpcnt, binance_config_selllowerpcnt=binance_config_selllowerpcnt,
+        logger_filelog=logger_filelog, logger_logfile=logger_logfile, logger_fileloglevel=logger_fileloglevel,
         logger_consolelog=logger_consolelog, logger_consoleloglevel=logger_consoleloglevel,
         telegram_client_id=telegram_client_id, telegram_token=telegram_token)
 
     stored_cryptobots_before = crud.cryptobot.get_multi_by_user(db=db, user_id=user.id)
     cryptobot = crud.cryptobot.create_with_owner(
-        db=db, obj_in=cryptobot_in, user_id=user.id)
+        db=db, obj_in=cryptobot_in, user_id=user.id, binance_account_id=binance_account.id)
         
     stored_cryptobots = crud.cryptobot.get_multi_by_user(db=db, user_id=user.id)
 
@@ -183,10 +175,8 @@ def test_get_cryptobots_with_user(db: Session) -> None:
 
 def test_update_cryptobot(db: Session) -> None:
     user = create_random_user(db)
+    binance_account = create_random_binance_account(db, user_id=user.id)
 
-    binance_api_url = "https://api.binance.com"
-    binance_api_key = "xxxxxxxxxxxxxxxxxxx"
-    binance_api_secret = "xxxxxxxxxxxxxxxxxxx"
     binance_config_base_currency = "BTC"
     binance_config_quote_currency = "EUR"
     binance_config_granularity = "15m"
@@ -194,6 +184,8 @@ def test_update_cryptobot(db: Session) -> None:
     binance_config_verbose = True
     binance_config_graphs = False
     binance_config_buymaxsize = 0.0004
+    binance_config_sellupperpcnt = 10
+    binance_config_selllowerpcnt = -10
     logger_filelog = True
     logger_logfile = "pycryptobot.log"
     logger_fileloglevel = "DEBUG"
@@ -203,27 +195,25 @@ def test_update_cryptobot(db: Session) -> None:
     telegram_token = "xxxxxx"
 
     cryptobot_in = CryptobotCreate(
-        binance_api_url=binance_api_url, binance_api_key=binance_api_key,
-        binance_api_secret=binance_api_secret, binance_config_base_currency=binance_config_base_currency,
-        binance_config_quote_currency=binance_config_quote_currency,
+        binance_config_base_currency=binance_config_base_currency, binance_config_quote_currency=binance_config_quote_currency,
         binance_config_granularity=binance_config_granularity, binance_config_live=binance_config_live,
         binance_config_verbose=binance_config_verbose, binance_config_graphs=binance_config_graphs,
-        binance_config_buymaxsize=binance_config_buymaxsize, logger_filelog=logger_filelog,
-        logger_logfile=logger_logfile, logger_fileloglevel=logger_fileloglevel,
+        binance_config_buymaxsize=binance_config_buymaxsize,
+        binance_config_sellupperpcnt=binance_config_sellupperpcnt, binance_config_selllowerpcnt=binance_config_selllowerpcnt,
+        logger_filelog=logger_filelog, logger_logfile=logger_logfile, logger_fileloglevel=logger_fileloglevel,
         logger_consolelog=logger_consolelog, logger_consoleloglevel=logger_consoleloglevel,
         telegram_client_id=telegram_client_id, telegram_token=telegram_token)
 
     cryptobot = crud.cryptobot.create_with_owner(
-        db=db, obj_in=cryptobot_in, user_id=user.id)
+        db=db, obj_in=cryptobot_in, user_id=user.id, binance_account_id=binance_account.id)
         
     cryptobot_update = CryptobotUpdate(
-        binance_api_url=binance_api_url, binance_api_key=binance_api_key,
-        binance_api_secret=binance_api_secret, binance_config_base_currency=binance_config_base_currency,
-        binance_config_quote_currency=binance_config_quote_currency,
+        binance_config_base_currency=binance_config_base_currency, binance_config_quote_currency=binance_config_quote_currency,
         binance_config_granularity=binance_config_granularity, binance_config_live=binance_config_live,
         binance_config_verbose=binance_config_verbose, binance_config_graphs=binance_config_graphs,
-        binance_config_buymaxsize=binance_config_buymaxsize, logger_filelog=logger_filelog,
-        logger_logfile=logger_logfile, logger_fileloglevel=logger_fileloglevel,
+        binance_config_buymaxsize=binance_config_buymaxsize,
+        binance_config_sellupperpcnt=binance_config_sellupperpcnt, binance_config_selllowerpcnt=binance_config_selllowerpcnt,
+        logger_filelog=logger_filelog, logger_logfile=logger_logfile, logger_fileloglevel=logger_fileloglevel,
         logger_consolelog=logger_consolelog, logger_consoleloglevel=logger_consoleloglevel,
         telegram_client_id=telegram_client_id, telegram_token=telegram_token)
 
@@ -234,9 +224,6 @@ def test_update_cryptobot(db: Session) -> None:
     assert cryptobot.user.id == cryptobot2.user.id
     assert cryptobot.user.firstname == cryptobot2.user.firstname
     assert cryptobot.user.email == cryptobot2.user.email
-    assert cryptobot.binance_api_url == cryptobot2.binance_api_url
-    assert cryptobot.binance_api_key == cryptobot2.binance_api_key
-    assert cryptobot.binance_api_secret == cryptobot2.binance_api_secret
     assert cryptobot.binance_config_base_currency == cryptobot2.binance_config_base_currency
     assert cryptobot.binance_config_quote_currency == cryptobot2.binance_config_quote_currency
     assert cryptobot.binance_config_granularity == cryptobot2.binance_config_granularity
@@ -257,10 +244,8 @@ def test_update_cryptobot(db: Session) -> None:
 
 def test_delete_cryptobot(db: Session) -> None:
     user = create_random_user(db)
+    binance_account = create_random_binance_account(db, user_id=user.id)
 
-    binance_api_url = "https://api.binance.com"
-    binance_api_key = "xxxxxxxxxxxxxxxxxxx"
-    binance_api_secret = "xxxxxxxxxxxxxxxxxxx"
     binance_config_base_currency = "BTC"
     binance_config_quote_currency = "EUR"
     binance_config_granularity = "15m"
@@ -268,6 +253,8 @@ def test_delete_cryptobot(db: Session) -> None:
     binance_config_verbose = True
     binance_config_graphs = False
     binance_config_buymaxsize = 0.0004
+    binance_config_sellupperpcnt = 10
+    binance_config_selllowerpcnt = -10
     logger_filelog = True
     logger_logfile = "pycryptobot.log"
     logger_fileloglevel = "DEBUG"
@@ -277,18 +264,17 @@ def test_delete_cryptobot(db: Session) -> None:
     telegram_token = "xxxxxx"
 
     cryptobot_in = CryptobotCreate(
-        binance_api_url=binance_api_url, binance_api_key=binance_api_key,
-        binance_api_secret=binance_api_secret, binance_config_base_currency=binance_config_base_currency,
-        binance_config_quote_currency=binance_config_quote_currency,
+        binance_config_base_currency=binance_config_base_currency, binance_config_quote_currency=binance_config_quote_currency,
         binance_config_granularity=binance_config_granularity, binance_config_live=binance_config_live,
         binance_config_verbose=binance_config_verbose, binance_config_graphs=binance_config_graphs,
-        binance_config_buymaxsize=binance_config_buymaxsize, logger_filelog=logger_filelog,
-        logger_logfile=logger_logfile, logger_fileloglevel=logger_fileloglevel,
+        binance_config_buymaxsize=binance_config_buymaxsize,
+        binance_config_sellupperpcnt=binance_config_sellupperpcnt, binance_config_selllowerpcnt=binance_config_selllowerpcnt,
+        logger_filelog=logger_filelog, logger_logfile=logger_logfile, logger_fileloglevel=logger_fileloglevel,
         logger_consolelog=logger_consolelog, logger_consoleloglevel=logger_consoleloglevel,
         telegram_client_id=telegram_client_id, telegram_token=telegram_token)
 
     cryptobot = crud.cryptobot.create_with_owner(
-        db=db, obj_in=cryptobot_in, user_id=user.id)
+        db=db, obj_in=cryptobot_in, user_id=user.id, binance_account_id=binance_account.id)
 
     cryptobot2 = crud.cryptobot.remove(db=db, id=cryptobot.id)
 
@@ -300,9 +286,6 @@ def test_delete_cryptobot(db: Session) -> None:
     assert cryptobot2.user.id == cryptobot.user.id
     assert cryptobot2.user.firstname == cryptobot.user.firstname
     assert cryptobot2.user.email == cryptobot.user.email
-    assert cryptobot2.binance_api_url == cryptobot.binance_api_url
-    assert cryptobot2.binance_api_key == cryptobot.binance_api_key
-    assert cryptobot2.binance_api_secret == cryptobot.binance_api_secret
     assert cryptobot2.binance_config_base_currency == cryptobot.binance_config_base_currency
     assert cryptobot2.binance_config_quote_currency == cryptobot.binance_config_quote_currency
     assert cryptobot2.binance_config_granularity == cryptobot.binance_config_granularity
