@@ -62,6 +62,9 @@ def create_cryptobot(
     else:
         raise HTTPException(status_code=400, detail="Binance Account not found")
     
+    cryptobot_in.binance_config_base_currency = cryptobot_in.binance_config_base_currency.upper()
+    cryptobot_in.binance_config_quote_currency = cryptobot_in.binance_config_quote_currency.upper()
+    
     post_data = {}
     post_data['user_id'] = current_user.id
     post_data['binance_api_key'] = binance_account.binance_api_key
