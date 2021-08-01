@@ -35,7 +35,7 @@ def upgrade():
                 ondelete='CASCADE'),
             nullable=False)
     )
-    op.execute("INSERT INTO telegrams(id, client_id, token) VALUES(1, client_id='changeme', token='changeme')")
+    op.execute("INSERT INTO telegrams(id, client_id, token) VALUES(1, 'changeme', 'changeme')")
 
     op.add_column(
         'cryptobots',
