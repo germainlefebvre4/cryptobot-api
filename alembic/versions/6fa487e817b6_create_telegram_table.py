@@ -23,7 +23,7 @@ def upgrade():
         'telegrams',
         Column('id', Integer, primary_key=True, index=True),
 
-        Column('client_id', String, unique=True),
+        Column('client_id', String),
         Column('token', String),
         
         Column('created_on', DateTime),
@@ -35,7 +35,7 @@ def upgrade():
                 ondelete='CASCADE'),
             nullable=False)
     )
-    op.execute("INSERT INTO telegrams(id, client_id, token) VALUES(1, 'changeme', 'changeme')")
+    op.execute("INSERT INTO telegrams (client_id, token) VALUES ('changeme', 'changeme')")
 
     op.add_column(
         'cryptobots',
