@@ -57,8 +57,8 @@ class CryptobotInDBBase(CryptobotBase):
     user: User
     binance_account_id: int
     binance_account: BinanceAccount
-    telegram_id: int
-    telegram: Telegram
+    telegram_id: Optional[int]
+    telegram: Optional[Telegram]
 
     created_on: Optional[datetime]
     updated_on: Optional[datetime]

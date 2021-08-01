@@ -35,7 +35,7 @@ def upgrade():
                 ondelete='CASCADE'),
             nullable=False)
     )
-    op.execute("INSERT INTO telegrams (client_id, token) VALUES ('changeme', 'changeme')")
+    # op.execute("INSERT INTO telegrams (client_id, token) VALUES ('changeme', 'changeme')")
 
     op.add_column(
         'cryptobots',
@@ -46,10 +46,10 @@ def upgrade():
                 ondelete='CASCADE'),
             nullable=True)
     )
-    op.execute("UPDATE cryptobots SET telegram_id = 1")
-    op.alter_column('cryptobots',
-        'telegram_id',
-        nullable=False)
+    # op.execute("UPDATE cryptobots SET telegram_id = 1")
+    # op.alter_column('cryptobots',
+    #     'telegram_id',
+    #     nullable=False)
 
     op.drop_column('cryptobots', 'telegram_client_id')
     op.drop_column('cryptobots', 'telegram_token')
