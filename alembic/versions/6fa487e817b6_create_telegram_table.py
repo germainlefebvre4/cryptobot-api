@@ -35,6 +35,7 @@ def upgrade():
                 ondelete='CASCADE'),
             nullable=False)
     )
+    op.execute("INSERT cryptobots(id, client_id, token) VALUES(1, client_id='', token='')")
 
     op.add_column(
         'cryptobots',
@@ -45,7 +46,7 @@ def upgrade():
                 ondelete='CASCADE'),
             nullable=True)
     )
-    op.execute("UPDATE cryptobots SET telegram_id = 99999")
+    op.execute("UPDATE cryptobots SET telegram_id = 1")
     op.alter_column('cryptobots',
         'telegram_id',
         nullable=False)
