@@ -1,6 +1,7 @@
 from .crud_user import user
 from .crud_cryptobot import cryptobot
 from .crud_binance_account import binance_account
+from .crud_telegram import telegram
 
 # For a new basic set of CRUD operations you could just do
 

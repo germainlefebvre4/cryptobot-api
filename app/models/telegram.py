@@ -4,14 +4,13 @@ from sqlalchemy.orm import relationship
 from app.db.base_class import Base
 
 
-class BinanceAccount(Base):
-    __tablename__ = "binance_accounts"
+class Telegram(Base):
+    __tablename__ = "telegrams"
 
     id = Column(Integer, primary_key=True, index=True)
     
-    binance_api_url = Column(String, nullable=False)
-    binance_api_key = Column(String, unique=True, index=True, nullable=False)
-    binance_api_secret = Column(String, index=True, nullable=False)
+    client_id = Column(String, unique=True, index=True, nullable=False)
+    token = Column(String, index=True, nullable=False)
 
     created_on = Column(DateTime)
     updated_on = Column(DateTime)
@@ -22,4 +21,4 @@ class BinanceAccount(Base):
         nullable=True)
     user = relationship("User", foreign_keys=[user_id])
 
-    cryptobots = relationship("Cryptobot", back_populates='binance_account')
+    cryptobots = relationship("Cryptobot", back_populates='telegram')
