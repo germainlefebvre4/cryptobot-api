@@ -43,7 +43,7 @@ def upgrade():
             ForeignKey(
                 'telegrams.id', name='fk_cryptobot_telegram_id',
                 ondelete='CASCADE'),
-            default=0,
+            default=99999,
             # nullable=False,
         )
         # )
