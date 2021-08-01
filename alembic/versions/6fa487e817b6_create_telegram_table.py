@@ -43,7 +43,9 @@ def upgrade():
             ForeignKey(
                 'telegrams.id', name='fk_cryptobot_telegram_id',
                 ondelete='CASCADE'),
-            nullable=False)
+            default=0,
+            # nullable=False,
+        )
         # )
     )
 
@@ -57,4 +59,6 @@ def downgrade():
         "fk_cryptobot_telegram_id", "cryptobots", type_="foreignkey")
     op.drop_constraint(
         "fk_telegram_user_id", "telegrams", type_="foreignkey")
+    op.drop_column(
+        'cryptobots', 'telegram_id')
     op.drop_table("telegrams")
