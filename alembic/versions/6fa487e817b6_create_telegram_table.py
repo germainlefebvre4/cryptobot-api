@@ -43,11 +43,12 @@ def upgrade():
             ForeignKey(
                 'telegrams.id', name='fk_cryptobot_telegram_id',
                 ondelete='CASCADE'),
-            default=99999,
-            # nullable=False,
-        )
-        # )
+            nullable=True)
     )
+    op.execute("UPDATE cryptobots SET telegram_id = 99999")
+    op.alter_column('cryptobots',
+        'telegram_id',
+        nullable=False)
 
     op.drop_column('cryptobots', 'telegram_client_id')
     op.drop_column('cryptobots', 'telegram_token')
