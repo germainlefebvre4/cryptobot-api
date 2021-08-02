@@ -33,7 +33,7 @@ class Cryptobot(Base):
     binance_account_id = Column(
         Integer,
         ForeignKey("binance_accounts.id", ondelete='CASCADE'),
-        nullable=True)
+        nullable=False)
     telegram_id = Column(
         Integer,
         ForeignKey("telegrams.id", ondelete='CASCADE'),
