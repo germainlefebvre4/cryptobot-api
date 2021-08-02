@@ -45,6 +45,7 @@ def create_cryptobot(
     *,
     db: Session = Depends(deps.get_db),
     binance_account_id: int,
+    telegram_id: int,
     cryptobot_in: schemas.CryptobotCreate,
     current_user: models.User = Depends(deps.get_current_active_user),
 ) -> Any:
@@ -61,6 +62,12 @@ def create_cryptobot(
         pass
     else:
         raise HTTPException(status_code=400, detail="Binance Account not found")
+
+    telegram = crud.binance_account.get(db, id=telegram_id)
+    if binance_account:
+        pass
+    else:
+        raise HTTPException(status_code=400, detail="Telegram not found")
     
     cryptobot_in.binance_config_base_currency = cryptobot_in.binance_config_base_currency.upper()
     cryptobot_in.binance_config_quote_currency = cryptobot_in.binance_config_quote_currency.upper()
@@ -81,7 +88,10 @@ def create_cryptobot(
 
     cryptobot = crud.cryptobot.create_with_owner(
         db=db, obj_in=cryptobot_in,
-        user_id=current_user.id, binance_account_id=binance_account_id)
+        user_id=current_user.id,
+        binance_account_id=binance_account_id,
+        telegram_id=telegram_id,
+    )
 
     return cryptobot
 

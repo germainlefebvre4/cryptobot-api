@@ -4,7 +4,7 @@ from datetime import date, datetime
 from pydantic import BaseModel
 from app.schemas.user import User
 from app.schemas.binance_account import BinanceAccount
-
+from app.schemas.telegram import Telegram
 
 class CryptobotBase(BaseModel):
     binance_config_base_currency: str
@@ -21,8 +21,7 @@ class CryptobotBase(BaseModel):
     logger_fileloglevel: str = "INFO"
     logger_consolelog: bool = True
     logger_consoleloglevel: str
-    telegram_client_id: str
-    telegram_token: str
+    telegram_id: int
 
 
 class CryptobotCreate(CryptobotBase):
@@ -42,8 +41,7 @@ class CryptobotUpdate(BaseModel):
     logger_fileloglevel: str = "INFO"
     logger_consolelog: bool = True
     logger_consoleloglevel: str
-    telegram_client_id: str
-    telegram_token: str
+    telegram_id: int
 
 
 class CryptobotDelete(CryptobotBase):
@@ -61,6 +59,8 @@ class CryptobotInDBBase(CryptobotBase):
     user: User
     binance_account_id: int
     binance_account: BinanceAccount
+    telegram_id: Optional[int]
+    telegram: Optional[Telegram]
 
     created_on: Optional[datetime]
     updated_on: Optional[datetime]

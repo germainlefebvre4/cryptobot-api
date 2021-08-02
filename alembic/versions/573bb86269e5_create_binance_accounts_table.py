@@ -57,4 +57,6 @@ def downgrade():
         "fk_cryptobot_binance_account_id", "cryptobots", type_="foreignkey")
     op.drop_constraint(
         "fk_binance_account_user_id", "binance_accounts", type_="foreignkey")
+    op.drop_column(
+        'cryptobots', 'binance_account_id')
     op.drop_table("binance_accounts")

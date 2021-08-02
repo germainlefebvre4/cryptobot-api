@@ -7,24 +7,18 @@ from fastapi.encoders import jsonable_encoder
 from sqlalchemy.orm import Session
 
 from app.crud.base import CRUDBase
-from app.models.cryptobot import Cryptobot
+from app.models.telegram import Telegram
 from app.models.user import User
-from app.schemas.cryptobot import CryptobotCreate, CryptobotUpdate
+from app.schemas.telegram import TelegramCreate, TelegramUpdate
 
 
-class CRUDCryptobot(CRUDBase[Cryptobot, CryptobotCreate, CryptobotUpdate]):
+class CRUDTelegram(CRUDBase[Telegram, TelegramCreate, TelegramUpdate]):
     def create_with_owner(
-        self, db: Session, *, obj_in: CryptobotCreate,
-        user_id: int,
-        binance_account_id: int,
-        telegram_id: int,
-    ) -> Cryptobot:
+        self, db: Session, *, obj_in: TelegramCreate, user_id: int,
+    ) -> Telegram:
         obj_in_data = jsonable_encoder(obj_in)
         created_on = datetime.now()
-        db_obj = self.model(**obj_in_data,
-            user_id=user_id,
-            binance_account_id=binance_account_id,
-            telegram_id=telegram_id,
+        db_obj = self.model(**obj_in_data, user_id=user_id,
             created_on=created_on)
         db.add(db_obj)
         db.commit()
@@ -33,7 +27,7 @@ class CRUDCryptobot(CRUDBase[Cryptobot, CryptobotCreate, CryptobotUpdate]):
 
     def get_multi(
         self, db: Session, *, skip: int = 0, limit: int = 100
-    ) -> List[Cryptobot]:
+    ) -> List[Telegram]:
         return (
             db.query(self.model)
             .offset(skip)
@@ -43,11 +37,11 @@ class CRUDCryptobot(CRUDBase[Cryptobot, CryptobotCreate, CryptobotUpdate]):
 
     def get_multi_by_user(
         self, db: Session, *, user_id: int, skip: int = 0, limit: int = 100
-    ) -> List[Cryptobot]:
+    ) -> List[Telegram]:
         return (
             db.query(self.model)
-            .join(Cryptobot.user)
-            .filter(Cryptobot.user_id == user_id)
+            .join(Telegram.user)
+            .filter(Telegram.user_id == user_id)
             .offset(skip)
             .limit(limit)
             .all()
@@ -57,9 +51,9 @@ class CRUDCryptobot(CRUDBase[Cryptobot, CryptobotCreate, CryptobotUpdate]):
         self,
         db: Session,
         *,
-        db_obj: Cryptobot,
-        obj_in: Union[CryptobotUpdate, Dict[str, Any]]
-    ) -> Cryptobot:
+        db_obj: Telegram,
+        obj_in: Union[TelegramUpdate, Dict[str, Any]]
+    ) -> Telegram:
         obj_data = jsonable_encoder(db_obj)
         updated_on = datetime.now()
         if isinstance(obj_in, dict):
@@ -75,4 +69,4 @@ class CRUDCryptobot(CRUDBase[Cryptobot, CryptobotCreate, CryptobotUpdate]):
         db.refresh(db_obj)
         return db_obj
 
-cryptobot = CRUDCryptobot(Cryptobot)
+telegram = CRUDTelegram(Telegram)

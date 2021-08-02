@@ -18,6 +18,7 @@ def create_random_cryptobot(
         db: Session,
         user_id: int = None,
         binance_account_id: int = None,
+        telegram_id: int = None,
         ) -> models.Cryptobot:
     if not user_id:
         user = create_random_user(db)
@@ -37,8 +38,6 @@ def create_random_cryptobot(
     logger_fileloglevel = "DEBUG"
     logger_consolelog = True
     logger_consoleloglevel = "INFO"
-    telegram_client_id = "xxxxxx"
-    telegram_token = "xxxxxx"
 
     cryptobot_in = CryptobotCreate(
         binance_config_base_currency=binance_config_base_currency,
@@ -50,7 +49,7 @@ def create_random_cryptobot(
         binance_config_selllowerpcnt=binance_config_selllowerpcnt,
         logger_filelog=logger_filelog, logger_logfile=logger_logfile, logger_fileloglevel=logger_fileloglevel,
         logger_consolelog=logger_consolelog, logger_consoleloglevel=logger_consoleloglevel,
-        telegram_client_id=telegram_client_id, telegram_token=telegram_token)
+    )
     
     return crud.cryptobot.create_with_owner(
-        db=db, obj_in=cryptobot_in, user_id=user_id, binance_account_id=binance_account_id)
+        db=db, obj_in=cryptobot_in, user_id=user_id, binance_account_id=binance_account_id, telegram_id=telegram_id)

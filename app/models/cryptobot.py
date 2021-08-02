@@ -22,8 +22,6 @@ class Cryptobot(Base):
     logger_fileloglevel = Column(String, default="INFO")
     logger_consolelog = Column(Boolean, default=True)
     logger_consoleloglevel = Column(String, default="INFO")
-    telegram_client_id = Column(String, nullable=False)
-    telegram_token = Column(String, nullable=False)
     
     created_on = Column(DateTime)
     updated_on = Column(DateTime)
@@ -35,7 +33,12 @@ class Cryptobot(Base):
     binance_account_id = Column(
         Integer,
         ForeignKey("binance_accounts.id", ondelete='CASCADE'),
+        nullable=False)
+    telegram_id = Column(
+        Integer,
+        ForeignKey("telegrams.id", ondelete='CASCADE'),
         nullable=True)
 
     user = relationship("User", foreign_keys=[user_id])
     binance_account = relationship("BinanceAccount", foreign_keys=[binance_account_id])
+    telegram = relationship("Telegram", foreign_keys=[telegram_id])
