@@ -76,6 +76,8 @@ def create_cryptobot(
     post_data['user_id'] = current_user.id
     post_data['binance_api_key'] = binance_account.binance_api_key
     post_data['binance_api_secret'] = binance_account.binance_api_secret
+    post_data['telegram_client_id'] = telegram.client_id
+    post_data['telegram_token'] = telegram.token
     for key,val in cryptobot_in.__dict__.items():
         if isinstance(val, bool) and val:
             post_data[key] = 1
