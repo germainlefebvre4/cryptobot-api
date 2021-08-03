@@ -21,7 +21,6 @@ class CryptobotBase(BaseModel):
     logger_fileloglevel: str = "INFO"
     logger_consolelog: bool = True
     logger_consoleloglevel: str
-    telegram_id: int
 
 
 class CryptobotCreate(CryptobotBase):
@@ -41,7 +40,6 @@ class CryptobotUpdate(BaseModel):
     logger_fileloglevel: str = "INFO"
     logger_consolelog: bool = True
     logger_consoleloglevel: str
-    telegram_id: int
 
 
 class CryptobotDelete(CryptobotBase):
