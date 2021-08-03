@@ -3,7 +3,7 @@ name: Build
 on:
   push:
     branches:
-      - chore/github-actions
+      - main
 
 jobs:
   build:
@@ -27,7 +27,7 @@ jobs:
         uses: cycjimmy/semantic-release-action@v2
         id: semantic
         with:
-          branches: 'chore/github-actions'
+          branches: 'main'
           semantic_version: 17.2.2
           extra_plugins: |
             @semantic-release/commit-analyzer@8.0.1
