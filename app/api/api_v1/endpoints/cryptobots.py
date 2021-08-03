@@ -63,7 +63,7 @@ def create_cryptobot(
     else:
         raise HTTPException(status_code=400, detail="Binance Account not found")
 
-    telegram = crud.binance_account.get(db, id=telegram_id)
+    telegram = crud.telegram.get(db, id=telegram_id)
     if binance_account:
         pass
     else:
