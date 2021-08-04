@@ -13,18 +13,18 @@ def create_operator_bot(data: dict):
     return r.json()
 
 
-def get_operator_bot(bot_id: str):
+def get_operator_bot(bot_name: str):
     r = requests.get(
-        f"{settings.CONTROLLER_URL}/operator/bot/{bot_id}",
+        f"{settings.CONTROLLER_URL}/operator/bot/{bot_name}",
         headers = {}
     )
 
     return r.json()
 
 
-def update_operator_bot(bot_id: str, data: dict):
+def update_operator_bot(bot_name: str, data: dict):
     r = requests.put(
-        f"{settings.CONTROLLER_URL}/operator/bot/{bot_id}",
+        f"{settings.CONTROLLER_URL}/operator/bot/{bot_name}",
         json = data,
         headers = {}
     )
@@ -32,9 +32,9 @@ def update_operator_bot(bot_id: str, data: dict):
     return r.json()
 
 
-def delete_operator_bot(bot_id: str):
+def delete_operator_bot(bot_name: str):
     r = requests.delete(
-        f"{settings.CONTROLLER_URL}/operator/bot/{bot_id}",
+        f"{settings.CONTROLLER_URL}/operator/bot/{bot_name}",
         headers = {}
     )
 

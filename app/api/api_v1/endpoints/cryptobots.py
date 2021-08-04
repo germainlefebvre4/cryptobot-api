@@ -64,11 +64,11 @@ def create_cryptobot(
         raise HTTPException(status_code=400, detail="Binance Account not found")
 
     telegram = crud.telegram.get(db, id=telegram_id)
-    if binance_account:
+    if telegram:
         pass
     else:
         raise HTTPException(status_code=400, detail="Telegram not found")
-    
+
     cryptobot_in.binance_config_base_currency = cryptobot_in.binance_config_base_currency.upper()
     cryptobot_in.binance_config_quote_currency = cryptobot_in.binance_config_quote_currency.upper()
     
@@ -116,6 +116,22 @@ def update_cryptobot(
     if (not crud.user.is_superuser(current_user) and
             (cryptobot.user_id != current_user.id)):
         raise HTTPException(status_code=400, detail="Not enough permissions")
+
+    post_data = {}
+    post_data['user_id'] = current_user.id
+    post_data['binance_account_id'] = cryptobot.binance_account_id
+    post_data['telegram_id'] = cryptobot.telegram_id
+    for key,val in cryptobot_in.__dict__.items():
+        if isinstance(val, bool) and val:
+            post_data[key] = 1
+        elif isinstance(val, bool) and not val:
+            post_data[key] = 0
+        else:
+            post_data[key] = val
+
+    bot_name = f"{current_user.id}-{cryptobot.binance_config_base_currency}{cryptobot.binance_config_quote_currency}".lower()
+    res = services.update_operator_bot(bot_name, post_data)
+
     cryptobot = crud.cryptobot.update(db=db, db_obj=cryptobot, obj_in=cryptobot_in)
 
     return cryptobot
@@ -160,7 +176,7 @@ def delete_cryptobot(
             (cryptobot.user_id != current_user.id)):
         raise HTTPException(status_code=400, detail="Not enough permissions")
 
-    bot_name = f"{current_user.id}-{cryptobot.binance_config_base_currency}{cryptobot.binance_config_quote_currency}"
+    bot_name = f"{current_user.id}-{cryptobot.binance_config_base_currency}{cryptobot.binance_config_quote_currency}".lower()
     services.delete_operator_bot(bot_name)
     
     cryptobot = crud.cryptobot.remove(db=db, id=id)
