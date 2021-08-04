@@ -119,8 +119,10 @@ def update_cryptobot(
 
     post_data = {}
     post_data['user_id'] = current_user.id
-    post_data['binance_account_id'] = cryptobot.binance_account_id
-    post_data['telegram_id'] = cryptobot.telegram_id
+    post_data['binance_api_key'] = cryptobot.binance_account.binance_api_key
+    post_data['binance_api_secret'] = cryptobot.binance_account.binance_api_secret
+    post_data['telegram_client_id'] = cryptobot.telegram.client_id
+    post_data['telegram_token'] = cryptobot.telegram.token
     for key,val in cryptobot_in.__dict__.items():
         if isinstance(val, bool) and val:
             post_data[key] = 1
