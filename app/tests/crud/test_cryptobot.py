@@ -32,6 +32,17 @@ def test_create_cryptobot(db: Session) -> None:
     binance_config_buymaxsize = 0.0004
     binance_config_sellupperpcnt = 10
     binance_config_selllowerpcnt = -10
+    binance_config_disablebullonly = False
+    binance_config_disablebuynearhigh = False
+    binance_config_disablebuymacd = False
+    binance_config_disablebuyema = False
+    binance_config_disablebuyobv = False
+    binance_config_disablebuyelderray = False
+    binance_config_disablefailsafefibonaccilow = False
+    binance_config_disablefailsafelowerpcnt = False
+    binance_config_disableprofitbankupperpcnt = False
+    binance_config_disableprofitbankfibonaccihigh = False
+    binance_config_disableprofitbankreversal = False
     logger_filelog = True
     logger_logfile = "pycryptobot.log"
     logger_fileloglevel = "DEBUG"
@@ -39,11 +50,26 @@ def test_create_cryptobot(db: Session) -> None:
     logger_consoleloglevel = "INFO"
 
     cryptobot_in = CryptobotCreate(
-        binance_config_base_currency=binance_config_base_currency, binance_config_quote_currency=binance_config_quote_currency,
-        binance_config_granularity=binance_config_granularity, binance_config_live=binance_config_live,
-        binance_config_verbose=binance_config_verbose, binance_config_graphs=binance_config_graphs,
+        binance_config_base_currency=binance_config_base_currency,
+        binance_config_quote_currency=binance_config_quote_currency,
+        binance_config_granularity=binance_config_granularity,
+        binance_config_live=binance_config_live,
+        binance_config_verbose=binance_config_verbose,
+        binance_config_graphs=binance_config_graphs,
         binance_config_buymaxsize=binance_config_buymaxsize,
-        binance_config_sellupperpcnt=binance_config_sellupperpcnt, binance_config_selllowerpcnt=binance_config_selllowerpcnt,
+        binance_config_sellupperpcnt=binance_config_sellupperpcnt,
+        binance_config_selllowerpcnt=binance_config_selllowerpcnt,
+        binance_config_disablebullonly=binance_config_disablebullonly,
+        binance_config_disablebuynearhigh=binance_config_disablebuynearhigh,
+        binance_config_disablebuymacd=binance_config_disablebuymacd,
+        binance_config_disablebuyema=binance_config_disablebuyema,
+        binance_config_disablebuyobv=binance_config_disablebuyobv,
+        binance_config_disablebuyelderray=binance_config_disablebuyelderray,
+        binance_config_disablefailsafefibonaccilow=binance_config_disablefailsafefibonaccilow,
+        binance_config_disablefailsafelowerpcnt=binance_config_disablefailsafelowerpcnt,
+        binance_config_disableprofitbankupperpcnt=binance_config_disableprofitbankupperpcnt,
+        binance_config_disableprofitbankfibonaccihigh=binance_config_disableprofitbankfibonaccihigh,
+        binance_config_disableprofitbankreversal=binance_config_disableprofitbankreversal,
         logger_filelog=logger_filelog, logger_logfile=logger_logfile, logger_fileloglevel=logger_fileloglevel,
         logger_consolelog=logger_consolelog, logger_consoleloglevel=logger_consoleloglevel,
     )
@@ -62,6 +88,19 @@ def test_create_cryptobot(db: Session) -> None:
     assert cryptobot.binance_config_verbose == binance_config_verbose
     assert cryptobot.binance_config_graphs == binance_config_graphs
     assert cryptobot.binance_config_buymaxsize == binance_config_buymaxsize
+    assert cryptobot.binance_config_sellupperpcnt == binance_config_sellupperpcnt
+    assert cryptobot.binance_config_selllowerpcnt == binance_config_selllowerpcnt
+    assert cryptobot.binance_config_disablebullonly == binance_config_disablebullonly
+    assert cryptobot.binance_config_disablebuynearhigh == binance_config_disablebuynearhigh
+    assert cryptobot.binance_config_disablebuymacd == binance_config_disablebuymacd
+    assert cryptobot.binance_config_disablebuyema == binance_config_disablebuyema
+    assert cryptobot.binance_config_disablebuyobv == binance_config_disablebuyobv
+    assert cryptobot.binance_config_disablebuyelderray == binance_config_disablebuyelderray
+    assert cryptobot.binance_config_disablefailsafefibonaccilow == binance_config_disablefailsafefibonaccilow
+    assert cryptobot.binance_config_disablefailsafelowerpcnt == binance_config_disablefailsafelowerpcnt
+    assert cryptobot.binance_config_disableprofitbankupperpcnt == binance_config_disableprofitbankupperpcnt
+    assert cryptobot.binance_config_disableprofitbankfibonaccihigh == binance_config_disableprofitbankfibonaccihigh
+    assert cryptobot.binance_config_disableprofitbankreversal == binance_config_disableprofitbankreversal
     assert cryptobot.logger_filelog == logger_filelog
     assert cryptobot.logger_logfile == logger_logfile
     assert cryptobot.logger_fileloglevel == logger_fileloglevel
@@ -85,6 +124,17 @@ def test_get_cryptobot(db: Session) -> None:
     binance_config_buymaxsize = 0.0004
     binance_config_sellupperpcnt = 10
     binance_config_selllowerpcnt = -10
+    binance_config_disablebullonly = False
+    binance_config_disablebuynearhigh = False
+    binance_config_disablebuymacd = False
+    binance_config_disablebuyema = False
+    binance_config_disablebuyobv = False
+    binance_config_disablebuyelderray = False
+    binance_config_disablefailsafefibonaccilow = False
+    binance_config_disablefailsafelowerpcnt = False
+    binance_config_disableprofitbankupperpcnt = False
+    binance_config_disableprofitbankfibonaccihigh = False
+    binance_config_disableprofitbankreversal = False
     logger_filelog = True
     logger_logfile = "pycryptobot.log"
     logger_fileloglevel = "DEBUG"
@@ -92,11 +142,26 @@ def test_get_cryptobot(db: Session) -> None:
     logger_consoleloglevel = "INFO"
 
     cryptobot_in = CryptobotCreate(
-        binance_config_base_currency=binance_config_base_currency, binance_config_quote_currency=binance_config_quote_currency,
-        binance_config_granularity=binance_config_granularity, binance_config_live=binance_config_live,
-        binance_config_verbose=binance_config_verbose, binance_config_graphs=binance_config_graphs,
+        binance_config_base_currency=binance_config_base_currency,
+        binance_config_quote_currency=binance_config_quote_currency,
+        binance_config_granularity=binance_config_granularity,
+        binance_config_live=binance_config_live,
+        binance_config_verbose=binance_config_verbose,
+        binance_config_graphs=binance_config_graphs,
         binance_config_buymaxsize=binance_config_buymaxsize,
-        binance_config_sellupperpcnt=binance_config_sellupperpcnt, binance_config_selllowerpcnt=binance_config_selllowerpcnt,
+        binance_config_sellupperpcnt=binance_config_sellupperpcnt,
+        binance_config_selllowerpcnt=binance_config_selllowerpcnt,
+        binance_config_disablebullonly=binance_config_disablebullonly,
+        binance_config_disablebuynearhigh=binance_config_disablebuynearhigh,
+        binance_config_disablebuymacd=binance_config_disablebuymacd,
+        binance_config_disablebuyema=binance_config_disablebuyema,
+        binance_config_disablebuyobv=binance_config_disablebuyobv,
+        binance_config_disablebuyelderray=binance_config_disablebuyelderray,
+        binance_config_disablefailsafefibonaccilow=binance_config_disablefailsafefibonaccilow,
+        binance_config_disablefailsafelowerpcnt=binance_config_disablefailsafelowerpcnt,
+        binance_config_disableprofitbankupperpcnt=binance_config_disableprofitbankupperpcnt,
+        binance_config_disableprofitbankfibonaccihigh=binance_config_disableprofitbankfibonaccihigh,
+        binance_config_disableprofitbankreversal=binance_config_disableprofitbankreversal,
         logger_filelog=logger_filelog, logger_logfile=logger_logfile, logger_fileloglevel=logger_fileloglevel,
         logger_consolelog=logger_consolelog, logger_consoleloglevel=logger_consoleloglevel,
     )
@@ -118,6 +183,19 @@ def test_get_cryptobot(db: Session) -> None:
     assert cryptobot.binance_config_verbose == stored_cryptobots.binance_config_verbose
     assert cryptobot.binance_config_graphs == stored_cryptobots.binance_config_graphs
     assert cryptobot.binance_config_buymaxsize == stored_cryptobots.binance_config_buymaxsize
+    assert cryptobot.binance_config_sellupperpcnt == binance_config_sellupperpcnt
+    assert cryptobot.binance_config_selllowerpcnt == binance_config_selllowerpcnt
+    assert cryptobot.binance_config_disablebullonly == stored_cryptobots.binance_config_disablebullonly
+    assert cryptobot.binance_config_disablebuynearhigh == stored_cryptobots.binance_config_disablebuynearhigh
+    assert cryptobot.binance_config_disablebuymacd == stored_cryptobots.binance_config_disablebuymacd
+    assert cryptobot.binance_config_disablebuyema == stored_cryptobots.binance_config_disablebuyema
+    assert cryptobot.binance_config_disablebuyobv == stored_cryptobots.binance_config_disablebuyobv
+    assert cryptobot.binance_config_disablebuyelderray == stored_cryptobots.binance_config_disablebuyelderray
+    assert cryptobot.binance_config_disablefailsafefibonaccilow == stored_cryptobots.binance_config_disablefailsafefibonaccilow
+    assert cryptobot.binance_config_disablefailsafelowerpcnt == stored_cryptobots.binance_config_disablefailsafelowerpcnt
+    assert cryptobot.binance_config_disableprofitbankupperpcnt == stored_cryptobots.binance_config_disableprofitbankupperpcnt
+    assert cryptobot.binance_config_disableprofitbankfibonaccihigh == stored_cryptobots.binance_config_disableprofitbankfibonaccihigh
+    assert cryptobot.binance_config_disableprofitbankreversal == stored_cryptobots.binance_config_disableprofitbankreversal
     assert cryptobot.logger_filelog == stored_cryptobots.logger_filelog
     assert cryptobot.logger_logfile == stored_cryptobots.logger_logfile
     assert cryptobot.logger_fileloglevel == stored_cryptobots.logger_fileloglevel
@@ -141,6 +219,17 @@ def test_get_cryptobots_with_user(db: Session) -> None:
     binance_config_buymaxsize = 0.0004
     binance_config_sellupperpcnt = 10
     binance_config_selllowerpcnt = -10
+    binance_config_disablebullonly = False
+    binance_config_disablebuynearhigh = False
+    binance_config_disablebuymacd = False
+    binance_config_disablebuyema = False
+    binance_config_disablebuyobv = False
+    binance_config_disablebuyelderray = False
+    binance_config_disablefailsafefibonaccilow = False
+    binance_config_disablefailsafelowerpcnt = False
+    binance_config_disableprofitbankupperpcnt = False
+    binance_config_disableprofitbankfibonaccihigh = False
+    binance_config_disableprofitbankreversal = False
     logger_filelog = True
     logger_logfile = "pycryptobot.log"
     logger_fileloglevel = "DEBUG"
@@ -148,11 +237,26 @@ def test_get_cryptobots_with_user(db: Session) -> None:
     logger_consoleloglevel = "INFO"
 
     cryptobot_in = CryptobotCreate(
-        binance_config_base_currency=binance_config_base_currency, binance_config_quote_currency=binance_config_quote_currency,
-        binance_config_granularity=binance_config_granularity, binance_config_live=binance_config_live,
-        binance_config_verbose=binance_config_verbose, binance_config_graphs=binance_config_graphs,
+        binance_config_base_currency=binance_config_base_currency,
+        binance_config_quote_currency=binance_config_quote_currency,
+        binance_config_granularity=binance_config_granularity,
+        binance_config_live=binance_config_live,
+        binance_config_verbose=binance_config_verbose,
+        binance_config_graphs=binance_config_graphs,
         binance_config_buymaxsize=binance_config_buymaxsize,
-        binance_config_sellupperpcnt=binance_config_sellupperpcnt, binance_config_selllowerpcnt=binance_config_selllowerpcnt,
+        binance_config_sellupperpcnt=binance_config_sellupperpcnt,
+        binance_config_selllowerpcnt=binance_config_selllowerpcnt,
+        binance_config_disablebullonly=binance_config_disablebullonly,
+        binance_config_disablebuynearhigh=binance_config_disablebuynearhigh,
+        binance_config_disablebuymacd=binance_config_disablebuymacd,
+        binance_config_disablebuyema=binance_config_disablebuyema,
+        binance_config_disablebuyobv=binance_config_disablebuyobv,
+        binance_config_disablebuyelderray=binance_config_disablebuyelderray,
+        binance_config_disablefailsafefibonaccilow=binance_config_disablefailsafefibonaccilow,
+        binance_config_disablefailsafelowerpcnt=binance_config_disablefailsafelowerpcnt,
+        binance_config_disableprofitbankupperpcnt=binance_config_disableprofitbankupperpcnt,
+        binance_config_disableprofitbankfibonaccihigh=binance_config_disableprofitbankfibonaccihigh,
+        binance_config_disableprofitbankreversal=binance_config_disableprofitbankreversal,
         logger_filelog=logger_filelog, logger_logfile=logger_logfile, logger_fileloglevel=logger_fileloglevel,
         logger_consolelog=logger_consolelog, logger_consoleloglevel=logger_consoleloglevel,
     )
@@ -182,6 +286,17 @@ def test_update_cryptobot(db: Session) -> None:
     binance_config_buymaxsize = 0.0004
     binance_config_sellupperpcnt = 10
     binance_config_selllowerpcnt = -10
+    binance_config_disablebullonly = False
+    binance_config_disablebuynearhigh = False
+    binance_config_disablebuymacd = False
+    binance_config_disablebuyema = False
+    binance_config_disablebuyobv = False
+    binance_config_disablebuyelderray = False
+    binance_config_disablefailsafefibonaccilow = False
+    binance_config_disablefailsafelowerpcnt = False
+    binance_config_disableprofitbankupperpcnt = False
+    binance_config_disableprofitbankfibonaccihigh = False
+    binance_config_disableprofitbankreversal = False
     logger_filelog = True
     logger_logfile = "pycryptobot.log"
     logger_fileloglevel = "DEBUG"
@@ -189,11 +304,26 @@ def test_update_cryptobot(db: Session) -> None:
     logger_consoleloglevel = "INFO"
 
     cryptobot_in = CryptobotCreate(
-        binance_config_base_currency=binance_config_base_currency, binance_config_quote_currency=binance_config_quote_currency,
-        binance_config_granularity=binance_config_granularity, binance_config_live=binance_config_live,
-        binance_config_verbose=binance_config_verbose, binance_config_graphs=binance_config_graphs,
+        binance_config_base_currency=binance_config_base_currency,
+        binance_config_quote_currency=binance_config_quote_currency,
+        binance_config_granularity=binance_config_granularity,
+        binance_config_live=binance_config_live,
+        binance_config_verbose=binance_config_verbose,
+        binance_config_graphs=binance_config_graphs,
         binance_config_buymaxsize=binance_config_buymaxsize,
-        binance_config_sellupperpcnt=binance_config_sellupperpcnt, binance_config_selllowerpcnt=binance_config_selllowerpcnt,
+        binance_config_sellupperpcnt=binance_config_sellupperpcnt,
+        binance_config_selllowerpcnt=binance_config_selllowerpcnt,
+        binance_config_disablebullonly=binance_config_disablebullonly,
+        binance_config_disablebuynearhigh=binance_config_disablebuynearhigh,
+        binance_config_disablebuymacd=binance_config_disablebuymacd,
+        binance_config_disablebuyema=binance_config_disablebuyema,
+        binance_config_disablebuyobv=binance_config_disablebuyobv,
+        binance_config_disablebuyelderray=binance_config_disablebuyelderray,
+        binance_config_disablefailsafefibonaccilow=binance_config_disablefailsafefibonaccilow,
+        binance_config_disablefailsafelowerpcnt=binance_config_disablefailsafelowerpcnt,
+        binance_config_disableprofitbankupperpcnt=binance_config_disableprofitbankupperpcnt,
+        binance_config_disableprofitbankfibonaccihigh=binance_config_disableprofitbankfibonaccihigh,
+        binance_config_disableprofitbankreversal=binance_config_disableprofitbankreversal,
         logger_filelog=logger_filelog, logger_logfile=logger_logfile, logger_fileloglevel=logger_fileloglevel,
         logger_consolelog=logger_consolelog, logger_consoleloglevel=logger_consoleloglevel,
     )
@@ -225,6 +355,19 @@ def test_update_cryptobot(db: Session) -> None:
     assert cryptobot.binance_config_verbose == cryptobot2.binance_config_verbose
     assert cryptobot.binance_config_graphs == cryptobot2.binance_config_graphs
     assert cryptobot.binance_config_buymaxsize == cryptobot2.binance_config_buymaxsize
+    assert cryptobot.binance_config_sellupperpcnt == cryptobot2.binance_config_sellupperpcnt
+    assert cryptobot.binance_config_selllowerpcnt == cryptobot2.binance_config_selllowerpcnt
+    assert cryptobot.binance_config_disablebullonly == cryptobot2.binance_config_disablebullonly
+    assert cryptobot.binance_config_disablebuynearhigh == cryptobot2.binance_config_disablebuynearhigh
+    assert cryptobot.binance_config_disablebuymacd == cryptobot2.binance_config_disablebuymacd
+    assert cryptobot.binance_config_disablebuyema == cryptobot2.binance_config_disablebuyema
+    assert cryptobot.binance_config_disablebuyobv == cryptobot2.binance_config_disablebuyobv
+    assert cryptobot.binance_config_disablebuyelderray == cryptobot2.binance_config_disablebuyelderray
+    assert cryptobot.binance_config_disablefailsafefibonaccilow == cryptobot2.binance_config_disablefailsafefibonaccilow
+    assert cryptobot.binance_config_disablefailsafelowerpcnt == cryptobot2.binance_config_disablefailsafelowerpcnt
+    assert cryptobot.binance_config_disableprofitbankupperpcnt == cryptobot2.binance_config_disableprofitbankupperpcnt
+    assert cryptobot.binance_config_disableprofitbankfibonaccihigh == cryptobot2.binance_config_disableprofitbankfibonaccihigh
+    assert cryptobot.binance_config_disableprofitbankreversal == cryptobot2.binance_config_disableprofitbankreversal
     assert cryptobot.logger_filelog == cryptobot2.logger_filelog
     assert cryptobot.logger_logfile == cryptobot2.logger_logfile
     assert cryptobot.logger_fileloglevel == cryptobot2.logger_fileloglevel
@@ -248,6 +391,17 @@ def test_delete_cryptobot(db: Session) -> None:
     binance_config_buymaxsize = 0.0004
     binance_config_sellupperpcnt = 10
     binance_config_selllowerpcnt = -10
+    binance_config_disablebullonly = False
+    binance_config_disablebuynearhigh = False
+    binance_config_disablebuymacd = False
+    binance_config_disablebuyema = False
+    binance_config_disablebuyobv = False
+    binance_config_disablebuyelderray = False
+    binance_config_disablefailsafefibonaccilow = False
+    binance_config_disablefailsafelowerpcnt = False
+    binance_config_disableprofitbankupperpcnt = False
+    binance_config_disableprofitbankfibonaccihigh = False
+    binance_config_disableprofitbankreversal = False
     logger_filelog = True
     logger_logfile = "pycryptobot.log"
     logger_fileloglevel = "DEBUG"
@@ -255,11 +409,26 @@ def test_delete_cryptobot(db: Session) -> None:
     logger_consoleloglevel = "INFO"
 
     cryptobot_in = CryptobotCreate(
-        binance_config_base_currency=binance_config_base_currency, binance_config_quote_currency=binance_config_quote_currency,
-        binance_config_granularity=binance_config_granularity, binance_config_live=binance_config_live,
-        binance_config_verbose=binance_config_verbose, binance_config_graphs=binance_config_graphs,
+        binance_config_base_currency=binance_config_base_currency,
+        binance_config_quote_currency=binance_config_quote_currency,
+        binance_config_granularity=binance_config_granularity,
+        binance_config_live=binance_config_live,
+        binance_config_verbose=binance_config_verbose,
+        binance_config_graphs=binance_config_graphs,
         binance_config_buymaxsize=binance_config_buymaxsize,
-        binance_config_sellupperpcnt=binance_config_sellupperpcnt, binance_config_selllowerpcnt=binance_config_selllowerpcnt,
+        binance_config_sellupperpcnt=binance_config_sellupperpcnt,
+        binance_config_selllowerpcnt=binance_config_selllowerpcnt,
+        binance_config_disablebullonly=binance_config_disablebullonly,
+        binance_config_disablebuynearhigh=binance_config_disablebuynearhigh,
+        binance_config_disablebuymacd=binance_config_disablebuymacd,
+        binance_config_disablebuyema=binance_config_disablebuyema,
+        binance_config_disablebuyobv=binance_config_disablebuyobv,
+        binance_config_disablebuyelderray=binance_config_disablebuyelderray,
+        binance_config_disablefailsafefibonaccilow=binance_config_disablefailsafefibonaccilow,
+        binance_config_disablefailsafelowerpcnt=binance_config_disablefailsafelowerpcnt,
+        binance_config_disableprofitbankupperpcnt=binance_config_disableprofitbankupperpcnt,
+        binance_config_disableprofitbankfibonaccihigh=binance_config_disableprofitbankfibonaccihigh,
+        binance_config_disableprofitbankreversal=binance_config_disableprofitbankreversal,
         logger_filelog=logger_filelog, logger_logfile=logger_logfile, logger_fileloglevel=logger_fileloglevel,
         logger_consolelog=logger_consolelog, logger_consoleloglevel=logger_consoleloglevel,
     )

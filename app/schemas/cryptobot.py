@@ -16,6 +16,17 @@ class CryptobotBase(BaseModel):
     binance_config_buymaxsize: float
     binance_config_sellupperpcnt: float
     binance_config_selllowerpcnt: float
+    binance_config_disablebullonly: bool = False
+    binance_config_disablebuynearhigh: bool = False
+    binance_config_disablebuymacd: bool = False
+    binance_config_disablebuyema: bool = False
+    binance_config_disablebuyobv: bool = False
+    binance_config_disablebuyelderray: bool = False
+    binance_config_disablefailsafefibonaccilow: bool = False
+    binance_config_disablefailsafelowerpcnt: bool = False
+    binance_config_disableprofitbankupperpcnt: bool = False
+    binance_config_disableprofitbankfibonaccihigh: bool = False
+    binance_config_disableprofitbankreversal: bool = False
     logger_filelog: bool = False
     logger_logfile: str = "pycryptobot.log"
     logger_fileloglevel: str = "INFO"
@@ -35,6 +46,17 @@ class CryptobotUpdate(BaseModel):
     binance_config_buymaxsize: float
     binance_config_sellupperpcnt: float
     binance_config_selllowerpcnt: float
+    binance_config_disablebullonly: bool = False
+    binance_config_disablebuynearhigh: bool = False
+    binance_config_disablebuymacd: bool = False
+    binance_config_disablebuyema: bool = False
+    binance_config_disablebuyobv: bool = False
+    binance_config_disablebuyelderray: bool = False
+    binance_config_disablefailsafefibonaccilow: bool = False
+    binance_config_disablefailsafelowerpcnt: bool = False
+    binance_config_disableprofitbankupperpcnt: bool = False
+    binance_config_disableprofitbankfibonaccihigh: bool = False
+    binance_config_disableprofitbankreversal: bool = False
     logger_filelog: bool = False
     logger_logfile: str = "pycryptobot.log"
     logger_fileloglevel: str = "INFO"
