@@ -38,6 +38,17 @@ def upgrade():
 
     for cryptobot in session.query(Cryptobot):
         cryptobot.binance_config_disablebullonly = False
+        cryptobot.binance_config_disablebullonly = False
+        cryptobot.binance_config_disablebuynearhigh = False
+        cryptobot.binance_config_disablebuymacd = False
+        cryptobot.binance_config_disablebuyema = False
+        cryptobot.binance_config_disablebuyobv = False
+        cryptobot.binance_config_disablebuyelderray = False
+        cryptobot.binance_config_disablefailsafefibonaccilow = False
+        cryptobot.binance_config_disablefailsafelowerpcnt = False
+        cryptobot.binance_config_disableprofitbankupperpcnt = False
+        cryptobot.binance_config_disableprofitbankfibonaccihigh = False
+        cryptobot.binance_config_disableprofitbankreversal = False
 
     session.commit()
 
