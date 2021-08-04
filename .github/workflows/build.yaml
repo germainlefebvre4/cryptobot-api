@@ -41,8 +41,6 @@ jobs:
 
       - name: Publish to Docker Repository
         uses: elgohr/Publish-Docker-Github-Action@master
-        env:
-          FRONTEND_ENV: production
         with:
           name: germainlefebvre4/cryptobot-api
           username: ${{ secrets.DOCKERHUB_USERNAME }}
