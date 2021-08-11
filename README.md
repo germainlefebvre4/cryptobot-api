@@ -19,6 +19,7 @@ docker-compose up -d
 Run the app:
 ```bash
 pipenv update
+pipenv run alembic upgrade head
 pipenv run python app/initial_data.py
 pipenv run uvicorn app.main:app --port=8080 --reload
 ```
@@ -46,6 +47,7 @@ pipenv update --dev
 This section use docker database called `cryptobot`.
 ```bash
 docker-compose up -d
+pipenv run alembic upgrade head
 pipenv run python app/initial_data.py
 pipenv run uvicorn app.main:app --port=8080 --reload
 ```

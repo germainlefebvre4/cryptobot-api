@@ -95,3 +95,11 @@ class Cryptobot(CryptobotInDBBase):
 
 class CryptobotInDB(CryptobotInDBBase):
     pass
+
+
+class CryptobotStatus(BaseModel):
+    status: str
+
+
+class CryptobotLogs(BaseModel):
+    logs: str

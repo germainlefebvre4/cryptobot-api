@@ -2,6 +2,8 @@ import requests
 
 from app.core.config import settings
 
+from app.schemas import CryptobotStatus, CryptobotLogs
+
 
 def create_operator_bot(data: dict):
     r = requests.post(
@@ -39,3 +41,21 @@ def delete_operator_bot(bot_name: str):
     )
 
     return r.json()
+
+
+def get_bot_status(bot_name: str):
+    r = requests.get(
+        f"{settings.CONTROLLER_URL}/bot/{bot_name}/status",
+        headers = {}
+    )
+
+    return CryptobotStatus(status=r.json()["status"])
+
+
+def get_bot_logs(bot_name: str):
+    r = requests.get(
+        f"{settings.CONTROLLER_URL}/bot/{bot_name}/logs",
+        headers = {}
+    )
+
+    return CryptobotLogs(logs=r.json()["logs"])
