@@ -57,5 +57,10 @@ class CRUDUser(CRUDBase[User, UserCreate, UserUpdate]):
     def is_superuser(self, user: User) -> bool:
         return user.is_superuser
 
+    def count(
+        self, db: Session,
+    ) -> User:
+        return db.query(User).count()
+
 
 user = CRUDUser(User)
