@@ -2,7 +2,7 @@ import requests
 
 from app.core.config import settings
 
-from app.schemas import CryptobotStatus, CryptobotLogs
+from app.schemas import CryptobotStatus, CryptobotLogs, CryptobotVersion
 
 
 def create_operator_bot(data: dict):
@@ -59,3 +59,12 @@ def get_bot_logs(bot_name: str):
     )
 
     return CryptobotLogs(logs=r.json()["logs"])
+
+
+def get_bot_version(bot_name: str):
+    r = requests.get(
+        f"{settings.CONTROLLER_URL}/bot/{bot_name}/version",
+        headers = {}
+    )
+
+    return CryptobotVersion(version=r.json()["version"])
