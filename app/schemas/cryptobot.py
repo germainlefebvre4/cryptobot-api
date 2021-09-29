@@ -103,3 +103,7 @@ class CryptobotStatus(BaseModel):
 
 class CryptobotLogs(BaseModel):
     logs: str
+
+
+class CryptobotVersion(BaseModel):
+    version: str
