@@ -161,7 +161,7 @@ def read_cryptobot(
 
 
 @router.get("/{id}/status", response_model=schemas.CryptobotStatus)
-def read_cryptobot(
+def read_cryptobot_status(
     *,
     db: Session = Depends(deps.get_db),
     id: int,
@@ -185,7 +185,7 @@ def read_cryptobot(
 
 
 @router.get("/{id}/logs", response_model=schemas.CryptobotLogs)
-def read_cryptobot(
+def read_cryptobot_logs(
     *,
     db: Session = Depends(deps.get_db),
     id: int,
@@ -209,7 +209,7 @@ def read_cryptobot(
 
 
 @router.get("/{id}/version", response_model=schemas.CryptobotVersion)
-def read_cryptobot(
+def read_cryptobot_version(
     *,
     db: Session = Depends(deps.get_db),
     id: int,
