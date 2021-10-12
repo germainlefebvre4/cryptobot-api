@@ -58,7 +58,9 @@ def get_bot_logs(bot_name: str):
         headers = {}
     )
 
-    return CryptobotLogs(logs=r.json()["logs"])
+    bot_logs = r.json()["logs"].replace('\n', '<br>').replace(' ', '&nbsp;')
+
+    return CryptobotLogs(logs=bot_logs)
 
 
 def get_bot_version(bot_name: str):
