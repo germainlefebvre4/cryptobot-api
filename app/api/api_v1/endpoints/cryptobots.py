@@ -209,15 +209,7 @@ def read_cryptobot_logs(
 
 
 @router.get("/{id}/version", response_model=schemas.CryptobotVersion)
-<<<<<<< HEAD
-<<<<<<< HEAD
 def read_cryptobot_version(
-=======
-def read_cryptobot(
->>>>>>> feat(Bot): Get bot version
-=======
-def read_cryptobot_version(
->>>>>>> feat(Bot): Get bot version
     *,
     db: Session = Depends(deps.get_db),
     id: int,
