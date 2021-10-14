@@ -40,3 +40,4 @@ starlette
 typing-extensions
 urllib3
 uvicorn
+python-binance
