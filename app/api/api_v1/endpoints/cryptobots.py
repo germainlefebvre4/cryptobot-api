@@ -232,6 +232,31 @@ def read_cryptobot_version(
     return bot_version
 
 
+@router.get("/{id}/margin", response_model=schemas.CryptobotMargin)
+def read_cryptobot_version(
+    *,
+    db: Session = Depends(deps.get_db),
+    id: int,
+    current_user: models.User = Depends(deps.get_current_active_user),
+) -> Any:
+    """
+    Get cryptobot by ID.
+    """
+    cryptobot = crud.cryptobot.get(db=db, id=id)
+
+    if not cryptobot:
+        raise HTTPException(status_code=404, detail="Cryptobot not found")
+    if (not crud.user.is_superuser(current_user) and
+            (cryptobot.user_id != current_user.id)):
+        raise HTTPException(status_code=400, detail="Not enough permissions")
+
+    bot_name = f"{current_user.id}-{cryptobot.binance_config_base_currency}{cryptobot.binance_config_quote_currency}".lower()
+    currency_pair = f"{cryptobot.binance_config_base_currency}{cryptobot.binance_config_quote_currency}".upper()
+    bot_version = services.get_bot_margin(bot_name=bot_name, currency_pair=currency_pair, cryptobot=cryptobot)
+
+    return bot_version
+
+
 @router.delete("/{id}", response_model=schemas.CryptobotDelete)
 def delete_cryptobot(
     *,

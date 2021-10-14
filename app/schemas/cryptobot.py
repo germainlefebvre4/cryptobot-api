@@ -107,3 +107,7 @@ class CryptobotLogs(BaseModel):
 
 class CryptobotVersion(BaseModel):
     version: str
+
+
+class CryptobotMargin(BaseModel):
+    margin: Optional[float]
