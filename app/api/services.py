@@ -2,7 +2,9 @@ import requests
 
 from app.core.config import settings
 
-from app.schemas import CryptobotStatus, CryptobotLogs, CryptobotVersion
+from app.schemas import CryptobotStatus, CryptobotLogs, CryptobotVersion, CryptobotMargin, Cryptobot
+
+from binance.client import Client
 
 
 def create_operator_bot(data: dict):
@@ -70,3 +72,26 @@ def get_bot_version(bot_name: str):
     )
 
     return CryptobotVersion(version=r.json()["version"])
+
+def get_bot_margin(bot_name: str, currency_pair: str, cryptobot: Cryptobot):
+    # Connect Binance API
+    client = Client(cryptobot.binance_account.binance_api_key, cryptobot.binance_account.binance_api_secret)
+
+    # # Get recent trades
+    last_trade = client.get_my_trades(
+        symbol=currency_pair,
+        limit=1,
+    )
+    # del last_trade[-1]
+    if len(last_trade) > 0:
+        if last_trade[0]['isBuyer']:
+            # Get last buy price in quote currency
+            last_trade_quote_price = float(last_trade[0]['price'])
+            # Get current price in quote currency
+            current_quote_price = float(client.get_symbol_ticker(symbol=currency_pair)['price'])
+            # Get current margin in quote currency
+            quote_margin = '{:.4f}'.format((current_quote_price - last_trade_quote_price) / last_trade_quote_price)
+
+            return CryptobotMargin(margin=quote_margin)
+
+    return CryptobotMargin()
