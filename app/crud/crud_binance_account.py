@@ -30,6 +30,7 @@ class CRUDBinanceAccount(CRUDBase[BinanceAccount, BinanceAccountCreate, BinanceA
     ) -> List[BinanceAccount]:
         return (
             db.query(self.model)
+            .order_by(BinanceAccount.icreated_on.asc())
             .offset(skip)
             .limit(limit)
             .all()
@@ -42,6 +43,7 @@ class CRUDBinanceAccount(CRUDBase[BinanceAccount, BinanceAccountCreate, BinanceA
             db.query(self.model)
             .join(BinanceAccount.user)
             .filter(BinanceAccount.user_id == user_id)
+            .order_by(BinanceAccount.created_on.asc())
             .offset(skip)
             .limit(limit)
             .all()
