@@ -29,7 +29,7 @@ pipenv run uvicorn app.main:app --port=8080 --reload
 Some distributions might miss some packages. These are some hints if needed:
 ```bash
 # cryptography/cffi
-sudo apt install build-essential libssl-dev libffi-dev
+sudo apt install build-essential libssl-dev libffi-dev libpq-dev
 ```
 
 
