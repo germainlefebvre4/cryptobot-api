@@ -1,7 +1,9 @@
 from typing import Generator
 
-from fastapi import Depends, HTTPException, status
+from fastapi import Depends, HTTPException, status, Security
 from fastapi.security import OAuth2PasswordBearer
+from fastapi.security.api_key import APIKeyQuery, APIKeyCookie, APIKeyHeader, APIKey
+
 from jose import jwt
 from pydantic import ValidationError
 from sqlalchemy.orm import Session
@@ -59,3 +61,23 @@ def get_current_active_superuser(
             status_code=400, detail="The user doesn't have enough privileges"
         )
     return current_user
+
+
+api_key_query = APIKeyQuery(name=settings.API_KEY_NAME, auto_error=False)
+api_key_header = APIKeyHeader(name=settings.API_KEY_NAME, auto_error=False)
+api_key_cookie = APIKeyCookie(name=settings.API_KEY_NAME, auto_error=False)
+
+
+def get_api_key(
+    api_key_query: str = Security(api_key_query),
+    api_key_header: str = Security(api_key_header),
+):
+
+    if api_key_query == settings.API_KEY:
+        return api_key_query
+    elif api_key_header == settings.API_KEY:
+        return api_key_header
+    else:
+        raise HTTPException(
+            status_code=403, detail="Could not validate credentials"
+        )

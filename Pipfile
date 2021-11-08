@@ -26,6 +26,7 @@ email-validator = "*"
 psycopg2 = "*"
 psycopg2-binary = "*"
 python-binance = "*"
+numpy = "*"
 
 [requires]
 python_version = "3.8"
