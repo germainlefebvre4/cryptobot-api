@@ -258,7 +258,7 @@ def get_bot_margin_trades_current_last(
     return bot_margin_trades_current_last
 
 
-@router.get("/{id}/margin/trades/curent/run", response_model=schemas.CryptobotMarginOverall)
+@router.get("/{id}/margin/trades/current/run", response_model=schemas.CryptobotMarginOverall)
 def get_bot_margin_trades_current_run(
     *,
     db: Session = Depends(deps.get_db),
