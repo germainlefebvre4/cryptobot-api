@@ -32,6 +32,7 @@ class Settings(BaseSettings):
     API_KEY: Optional[str]
 
     CONTROLLER_URL: str
+    MARGIN_URL: str
 
     @validator("SENTRY_DSN", pre=True)
     def sentry_dsn_can_be_blank(cls, v: str) -> Optional[str]:

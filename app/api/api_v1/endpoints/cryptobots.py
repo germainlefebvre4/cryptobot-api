@@ -232,8 +232,8 @@ def read_cryptobot_version(
     return bot_version
 
 
-@router.get("/{id}/margin/last_trade", response_model=schemas.CryptobotMargin)
-def read_cryptobot_version(
+@router.get("/{id}/margin/trades/current/last", response_model=schemas.CryptobotMarginLastTrade)
+def get_bot_margin_trades_current_last(
     *,
     db: Session = Depends(deps.get_db),
     id: int,
@@ -250,16 +250,16 @@ def read_cryptobot_version(
             (cryptobot.user_id != current_user.id)):
         raise HTTPException(status_code=400, detail="Not enough permissions")
 
-    bot_margin_last_trade = services.get_bot_margin_last_trade(
+    bot_margin_trades_current_last = services.get_bot_margin_trades_current_last(
         base_currency=cryptobot.binance_config_base_currency,
         quote_currency=cryptobot.binance_config_quote_currency,
-        cryptobot=cryptobot)
+        user_id=current_user.id)
 
-    return bot_margin_last_trade
+    return bot_margin_trades_current_last
 
 
-@router.get("/{id}/margin/overall", response_model=schemas.CryptobotMargin)
-def read_cryptobot_version(
+@router.get("/{id}/margin/trades/curent/run", response_model=schemas.CryptobotMarginOverall)
+def get_bot_margin_trades_current_run(
     *,
     db: Session = Depends(deps.get_db),
     id: int,
@@ -276,12 +276,64 @@ def read_cryptobot_version(
             (cryptobot.user_id != current_user.id)):
         raise HTTPException(status_code=400, detail="Not enough permissions")
 
-    bot_margin_overall = services.get_bot_margin_all(
+    bot_margin_trades_current_run = services.get_bot_margin_trades_current_run(
         base_currency=cryptobot.binance_config_base_currency,
         quote_currency=cryptobot.binance_config_quote_currency,
-        cryptobot=cryptobot)
+        user_id=current_user.id)
 
-    return bot_margin_overall
+    return bot_margin_trades_current_run
+
+
+@router.get("/{id}/margin/trades/history/sell", response_model=schemas.CryptobotMarginOverall)
+def get_bot_margin_trades_history_sells(
+    *,
+    db: Session = Depends(deps.get_db),
+    id: int,
+    current_user: models.User = Depends(deps.get_current_active_user),
+) -> Any:
+    """
+    Get cryptobot by ID.
+    """
+    cryptobot = crud.cryptobot.get(db=db, id=id)
+
+    if not cryptobot:
+        raise HTTPException(status_code=404, detail="Cryptobot not found")
+    if (not crud.user.is_superuser(current_user) and
+            (cryptobot.user_id != current_user.id)):
+        raise HTTPException(status_code=400, detail="Not enough permissions")
+
+    bot_margin_trades_history_sells = services.get_bot_margin_trades_history_sells(
+        base_currency=cryptobot.binance_config_base_currency,
+        quote_currency=cryptobot.binance_config_quote_currency,
+        user_id=current_user.id)
+
+    return bot_margin_trades_history_sells
+
+
+@router.get("/{id}/margin/trades/history/all", response_model=schemas.CryptobotMarginLastTrade)
+def get_bot_margin_trades_history_all(
+    *,
+    db: Session = Depends(deps.get_db),
+    id: int,
+    current_user: models.User = Depends(deps.get_current_active_user),
+) -> Any:
+    """
+    Get cryptobot by ID.
+    """
+    cryptobot = crud.cryptobot.get(db=db, id=id)
+
+    if not cryptobot:
+        raise HTTPException(status_code=404, detail="Cryptobot not found")
+    if (not crud.user.is_superuser(current_user) and
+            (cryptobot.user_id != current_user.id)):
+        raise HTTPException(status_code=400, detail="Not enough permissions")
+
+    bot_margin_trades_history_all = services.get_bot_margin_trades_history_all(
+        base_currency=cryptobot.binance_config_base_currency,
+        quote_currency=cryptobot.binance_config_quote_currency,
+        user_id=current_user.id)
+
+    return bot_margin_trades_history_all
 
 
 @router.delete("/{id}", response_model=schemas.CryptobotDelete)

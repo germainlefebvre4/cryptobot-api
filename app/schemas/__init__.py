@@ -1,5 +1,5 @@
 from .cryptobot import Cryptobot, CryptobotCreate, CryptobotInDB, CryptobotUpdate, CryptobotDelete
-from .cryptobot import CryptobotStatus, CryptobotLogs, CryptobotVersion, CryptobotMargin
+from .cryptobot import CryptobotStatus, CryptobotLogs, CryptobotVersion, CryptobotMargin, CryptobotMarginLastTrade, CryptobotMarginOverall
 from .msg import Msg
 from .token import Token, TokenPayload
 from .user import User, UserCreate, UserInDB, UserUpdate
