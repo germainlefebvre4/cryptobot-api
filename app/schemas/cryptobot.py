@@ -113,10 +113,7 @@ class CryptobotMargin(BaseModel):
     value: Optional[float]
     unit: Optional[str]
 
-class CryptobotMarginOverall(CryptobotMargin):
-    pass
-
-class CryptobotMarginLastTrade(BaseModel):
+class CryptobotMarginTradeLast(BaseModel):
     base_currency: Optional[CryptobotMargin]
     quote_currency: Optional[CryptobotMargin]
     percent: Optional[float]

@@ -3,7 +3,11 @@ from numpy import average
 
 from app.core.config import settings
 
-from app.schemas import CryptobotStatus, CryptobotLogs, CryptobotVersion, CryptobotMargin, Cryptobot, CryptobotMarginOverall, CryptobotMarginLastTrade
+from app.schemas import (
+    Cryptobot,
+    CryptobotStatus, CryptobotLogs, CryptobotVersion,
+    CryptobotMargin, CryptobotMarginTradeLast,
+)
 
 from binance.client import Client
 
@@ -77,27 +81,7 @@ def get_bot_version(bot_name: str):
 
 def get_bot_margin_trades_current_last(base_currency: str, quote_currency: str, user_id: int):
     r = requests.get(
-        f"{settings.MARGIN_URL}/margin/currencies/{base_currency}/{quote_currency}/trades/history/all" + \
-            f"?user_id={user_id}",
-        headers = {}
-    )
-
-    return r.json()
-
-
-def get_bot_margin_trades_history_sells(base_currency: str, quote_currency: str, user_id: int):
-    r = requests.get(
-        f"{settings.MARGIN_URL}/margin/currencies/{base_currency}/{quote_currency}/trades/history/sells" + \
-            f"?user_id={user_id}",
-        headers = {}
-    )
-
-    return r.json()
-
-
-def get_bot_margin_trades_history_all(base_currency: str, quote_currency: str, user_id: int):
-    r = requests.get(
-        f"{settings.MARGIN_URL}/margin/currencies/{base_currency}/{quote_currency}/trades/history/all" + \
+        f"{settings.MARGIN_URL}/margin/currencies/{base_currency}/{quote_currency}/trades/current/last" + \
             f"?user_id={user_id}",
         headers = {}
     )
