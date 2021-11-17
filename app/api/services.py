@@ -1,4 +1,5 @@
 import requests
+from app import schemas
 from numpy import average
 
 from app.core.config import settings
@@ -93,6 +94,39 @@ def get_bot_margin_trades_current_run(base_currency: str, quote_currency: str, u
     r = requests.get(
         f"{settings.MARGIN_URL}/margin/currencies/{base_currency}/{quote_currency}/trades/current/run" + \
             f"?user_id={user_id}",
+        headers = {}
+    )
+
+    return r.json()
+
+
+def get_currencies(user_id: int, skip: int, limit: int):
+    r = requests.get(
+        f"{settings.MARGIN_URL}/margin/currencies/?" + \
+            f"&skip={skip}" + \
+            f"&limit={limit}" + \
+            f"&user_id={user_id}",
+        headers = {}
+    )
+
+    return r.json()
+
+
+def create_currency(user_id: int, currency_in: schemas.CurrencyCreate):
+    r = requests.post(
+        f"{settings.MARGIN_URL}/margin/currencies/?" + \
+        f"&user_id={user_id}",
+        headers = {},
+        json = dict(currency_in),
+    )
+
+    return r.json()
+
+
+def get_currency_by_id(user_id: int, currency_id: int):
+    r = requests.get(
+        f"{settings.MARGIN_URL}/margin/currencies/{currency_id}?" + \
+        f"&user_id={user_id}",
         headers = {}
     )
 
