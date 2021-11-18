@@ -2,6 +2,8 @@ import requests
 from app import schemas
 from numpy import average
 
+from fastapi import HTTPException
+
 from app.core.config import settings
 
 from app.schemas import (
@@ -120,7 +122,10 @@ def create_currency(user_id: int, currency_in: schemas.CurrencyCreate):
         json = dict(currency_in),
     )
 
-    return r.json()
+    if r.status_code == 200:
+        return r.json()
+    else:
+        raise HTTPException(status_code=r.status_code, detail="En error occured")
 
 
 def get_currency_by_id(user_id: int, currency_id: int):
@@ -129,5 +134,22 @@ def get_currency_by_id(user_id: int, currency_id: int):
         f"&user_id={user_id}",
         headers = {}
     )
+    if r.status_code == 200:
+        return r.json()
+    elif r.status_code == 404:
+        return None
+    else:
+        raise HTTPException(status_code=404, detail="Currency not found")
 
-    return r.json()
+
+def delete_currency_by_id(user_id: int, currency_id: int):
+    r = requests.delete(
+        f"{settings.MARGIN_URL}/margin/currencies/{currency_id}?" + \
+        f"&user_id={user_id}",
+        headers = {}
+    )
+
+    if r.status_code == 200:
+        return r.json()
+    else:
+        raise HTTPException(status_code=r.status_code, detail="En error occured")

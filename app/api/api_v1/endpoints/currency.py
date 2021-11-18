@@ -62,7 +62,6 @@ def read_currency(
     """
     Get currency by ID.
     """
-
     currency = services.get_currency_by_id(
         currency_id=id,
         user_id=current_user.id)
@@ -73,21 +72,20 @@ def read_currency(
     return currency
 
 
-# @router.delete("/{id}", response_model=schemas.CurrencyDelete)
-# def delete_currency(
-#     *,
-#     user_id: int,
-#     db: Session = Depends(deps.get_db),
-#     id: int,
-# ) -> Any:
-#     """
-#     Delete an currency.
-#     """
-#     currency = crud.currency.get_by_user(db=db, id=id, user_id=user_id)
+@router.delete("/{id}", response_model=schemas.CurrencyDelete)
+def delete_currency(
+    *,
+    id: int,
+    current_user: models.User = Depends(deps.get_current_active_user),
+) -> Any:
+    """
+    Delete an currency.
+    """
+    currency = services.delete_currency_by_id(
+        currency_id=id,
+        user_id=current_user.id)
 
-#     if not currency:
-#         raise HTTPException(status_code=404, detail="Currency not found")
+    if not currency:
+        raise HTTPException(status_code=404, detail="Currency not found")
 
-#     currency = crud.currency.remove(db=db, id=id)
-
-#     return currency
+    return currency
