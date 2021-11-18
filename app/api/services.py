@@ -84,7 +84,7 @@ def get_bot_version(bot_name: str):
 
 def get_bot_margin_trades_current_last(base_currency: str, quote_currency: str, user_id: int):
     r = requests.get(
-        f"{settings.MARGIN_URL}/margin/currencies/{base_currency}/{quote_currency}/trades/current/last" + \
+        f"{settings.MARGIN_URL}/trades/currencies/{base_currency}/{quote_currency}/current/last" + \
             f"?user_id={user_id}",
         headers = {}
     )
@@ -94,7 +94,7 @@ def get_bot_margin_trades_current_last(base_currency: str, quote_currency: str, 
 
 def get_bot_margin_trades_current_run(base_currency: str, quote_currency: str, user_id: int):
     r = requests.get(
-        f"{settings.MARGIN_URL}/margin/currencies/{base_currency}/{quote_currency}/trades/current/run" + \
+        f"{settings.MARGIN_URL}/trades/currencies/{base_currency}/{quote_currency}/current/run" + \
             f"?user_id={user_id}",
         headers = {}
     )
@@ -157,7 +157,7 @@ def delete_currency_by_id(user_id: int, currency_id: int):
 
 def get_currencies_margin_trades_last(user_id: int, skip: int, limit: int):
     r = requests.get(
-        f"{settings.MARGIN_URL}/margin/currencies/margin/trades/last" + \
+        f"{settings.MARGIN_URL}/margin/trades/last" + \
         f"?user_id={user_id}",
         headers = {}
     )
@@ -167,7 +167,7 @@ def get_currencies_margin_trades_last(user_id: int, skip: int, limit: int):
 
 def get_currencies_margin_trades_run(user_id: int, skip: int, limit: int):
     r = requests.get(
-        f"{settings.MARGIN_URL}/margin/currencies/margin/trades/last" + \
+        f"{settings.MARGIN_URL}/margin/trades/last" + \
         f"?user_id={user_id}",
         headers = {}
     )
