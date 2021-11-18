@@ -5,6 +5,7 @@ from app.api.api_v1.endpoints import (
     users,
     metrics,
     currency,
+    margin,
 )
 from app.api.api_v1.private import (
     users as users_private,
@@ -19,6 +20,7 @@ api_router.include_router(cryptobots.router, prefix="/cryptobots", tags=["crypto
 api_router.include_router(binance_account.router, prefix="/binance/accounts", tags=["binance_accounts"])
 api_router.include_router(telegram.router, prefix="/telegram", tags=["telegrams"])
 api_router.include_router(currency.router, prefix="/margin/currencies", tags=["currencies"])
+api_router.include_router(margin.router, prefix="/margin/currencies/margin", tags=["margin"])
 api_router.include_router(utils.router, prefix="/utils", tags=["utils"])
 
 api_router.include_router(metrics.router, prefix="/metrics", tags=["metrics"])

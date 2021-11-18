@@ -153,3 +153,23 @@ def delete_currency_by_id(user_id: int, currency_id: int):
         return r.json()
     else:
         raise HTTPException(status_code=r.status_code, detail="En error occured")
+
+
+def get_currencies_margin_trades_last(user_id: int, skip: int, limit: int):
+    r = requests.get(
+        f"{settings.MARGIN_URL}/margin/currencies/margin/trades/last" + \
+        f"?user_id={user_id}",
+        headers = {}
+    )
+
+    return r.json()
+
+
+def get_currencies_margin_trades_run(user_id: int, skip: int, limit: int):
+    r = requests.get(
+        f"{settings.MARGIN_URL}/margin/currencies/margin/trades/last" + \
+        f"?user_id={user_id}",
+        headers = {}
+    )
+
+    return r.json()

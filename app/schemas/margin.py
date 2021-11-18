@@ -19,15 +19,11 @@ class UserWallet(BaseModel):
 
 
 class WalletCurrency(BaseModel):
-    base_currency: str
-    quote_currency: str
+    base_currency: Optional[str]
+    quote_currency: Optional[str]
 
-    market: MarketPrice
+    market: Optional[MarketPrice]
 
-    wallet: UserWallet
+    wallet: Optional[UserWallet]
 
-    margin: MarginValue
-
-
-# class MarginCurrency(BaseModel):
-#     currencies: List[WalletCurrency] = []
+    margin: Optional[MarginValue]
