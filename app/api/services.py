@@ -104,7 +104,7 @@ def get_bot_margin_trades_current_run(base_currency: str, quote_currency: str, u
 
 def get_currencies(user_id: int, skip: int, limit: int):
     r = requests.get(
-        f"{settings.MARGIN_URL}/margin/currencies/?" + \
+        f"{settings.MARGIN_URL}/currencies/?" + \
             f"&skip={skip}" + \
             f"&limit={limit}" + \
             f"&user_id={user_id}",
@@ -116,7 +116,7 @@ def get_currencies(user_id: int, skip: int, limit: int):
 
 def create_currency(user_id: int, currency_in: schemas.CurrencyCreate):
     r = requests.post(
-        f"{settings.MARGIN_URL}/margin/currencies/?" + \
+        f"{settings.MARGIN_URL}/currencies/?" + \
         f"&user_id={user_id}",
         headers = {},
         json = dict(currency_in),
@@ -130,7 +130,7 @@ def create_currency(user_id: int, currency_in: schemas.CurrencyCreate):
 
 def get_currency_by_id(user_id: int, currency_id: int):
     r = requests.get(
-        f"{settings.MARGIN_URL}/margin/currencies/{currency_id}?" + \
+        f"{settings.MARGIN_URL}/currencies/{currency_id}?" + \
         f"&user_id={user_id}",
         headers = {}
     )
@@ -144,7 +144,7 @@ def get_currency_by_id(user_id: int, currency_id: int):
 
 def delete_currency_by_id(user_id: int, currency_id: int):
     r = requests.delete(
-        f"{settings.MARGIN_URL}/margin/currencies/{currency_id}?" + \
+        f"{settings.MARGIN_URL}/currencies/{currency_id}?" + \
         f"&user_id={user_id}",
         headers = {}
     )
