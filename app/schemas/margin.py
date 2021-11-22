@@ -9,6 +9,18 @@ class MarginValue(BaseModel):
     value: float
 
 
+class MarginTradeOperations(BaseModel):
+    count: int
+
+
+class MarginTrade(BaseModel):
+    operations: MarginTradeOperations
+    price: float
+    volume: float
+    value: float
+    margin: MarginValue
+
+
 class MarketPrice(BaseModel):
     price: float
 
@@ -18,12 +30,12 @@ class UserWallet(BaseModel):
     volume: float
 
 
-class WalletCurrency(BaseModel):
+class TradesMargin(BaseModel):
     base_currency: Optional[str]
     quote_currency: Optional[str]
 
     market: Optional[MarketPrice]
-
     wallet: Optional[UserWallet]
 
-    margin: Optional[MarginValue]
+    last_trade: Optional[MarginTrade]
+    last_run: Optional[MarginTrade]
