@@ -1,10 +1,18 @@
 from typing import Optional
 from datetime import date, datetime
+from enum import Enum, IntEnum
 
 from pydantic import BaseModel
 from app.schemas.user import User
 from app.schemas.binance_account import BinanceAccount
 from app.schemas.telegram import Telegram
+
+
+class TradeLastAction(Enum):
+    BUY = "BUY"
+    SELL = "SELL"
+    HOLD = "HOLD"
+    NONE = "NONE"
 
 class CryptobotBase(BaseModel):
     binance_config_base_currency: str
@@ -76,11 +84,12 @@ class CryptobotDelete(CryptobotBase):
 class CryptobotInDBBase(CryptobotBase):
     id: int
     user_id: int
-    user: User
+    # user: User
     binance_account_id: int
-    binance_account: BinanceAccount
+    # binance_account: BinanceAccount
     telegram_id: Optional[int]
-    telegram: Optional[Telegram]
+    # telegram: Optional[Telegram]
+    last_action: Optional[TradeLastAction] = None
 
     created_on: Optional[datetime]
     updated_on: Optional[datetime]

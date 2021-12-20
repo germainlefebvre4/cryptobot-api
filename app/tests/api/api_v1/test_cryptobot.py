@@ -54,12 +54,6 @@ def test_create_cryptobot_by_admin(
 
     assert response.status_code == 200
     assert "id" in content
-    assert isinstance(content["binance_account"], dict)
-    assert content["binance_account"]["binance_api_url"] == "https://api.binance.com"
-    assert content["binance_account"]["binance_api_key"] == binance_account.binance_api_key
-    assert content["binance_account"]["binance_api_secret"] == binance_account.binance_api_secret
-    assert content["telegram"]["client_id"] == telegram.client_id
-    assert content["telegram"]["token"] == telegram.token
     assert content["binance_config_base_currency"] == data["binance_config_base_currency"]
     assert content["binance_config_quote_currency"] == data["binance_config_quote_currency"]
     assert content["binance_config_granularity"] == data["binance_config_granularity"]
@@ -113,11 +107,6 @@ def test_create_cryptobot_by_user(
 
     assert response.status_code == 200
     assert "id" in content
-    assert content["binance_account"]["binance_api_url"] == binance_account.binance_api_url
-    assert content["binance_account"]["binance_api_key"] == binance_account.binance_api_key
-    assert content["binance_account"]["binance_api_secret"] == binance_account.binance_api_secret
-    assert content["telegram"]["client_id"] == telegram.client_id
-    assert content["telegram"]["token"] == telegram.token
     assert content["binance_config_base_currency"] == data["binance_config_base_currency"]
     assert content["binance_config_quote_currency"] == data["binance_config_quote_currency"]
     assert content["binance_config_granularity"] == data["binance_config_granularity"]
@@ -153,11 +142,6 @@ def test_read_cryptobot_by_admin(
 
     assert response.status_code == 200
     assert "id" in content
-    assert content["binance_account"]["binance_api_url"] == binance_account.binance_api_url
-    assert content["binance_account"]["binance_api_key"] == binance_account.binance_api_key
-    assert content["binance_account"]["binance_api_secret"] == binance_account.binance_api_secret
-    assert content["telegram"]["client_id"] == telegram.client_id
-    assert content["telegram"]["token"] == telegram.token
     assert content["binance_config_base_currency"] == cryptobot.binance_config_base_currency
     assert content["binance_config_quote_currency"] == cryptobot.binance_config_quote_currency
     assert content["binance_config_granularity"] == cryptobot.binance_config_granularity
@@ -193,11 +177,6 @@ def test_read_cryptobot_by_user(
 
     assert response.status_code == 200
     assert "id" in content
-    assert content["binance_account"]["binance_api_url"] == binance_account.binance_api_url
-    assert content["binance_account"]["binance_api_key"] == binance_account.binance_api_key
-    assert content["binance_account"]["binance_api_secret"] == binance_account.binance_api_secret
-    assert content["telegram"]["client_id"] == telegram.client_id
-    assert content["telegram"]["token"] == telegram.token
     assert content["binance_config_base_currency"] == cryptobot.binance_config_base_currency
     assert content["binance_config_quote_currency"] == cryptobot.binance_config_quote_currency
     assert content["binance_config_granularity"] == cryptobot.binance_config_granularity
@@ -263,11 +242,6 @@ def test_update_cryptobot_by_admin(
 
     assert response.status_code == 200
     assert "id" in content
-    assert content["binance_account"]["binance_api_url"] == binance_account.binance_api_url
-    assert content["binance_account"]["binance_api_key"] == binance_account.binance_api_key
-    assert content["binance_account"]["binance_api_secret"] == binance_account.binance_api_secret
-    assert content["telegram"]["client_id"] == telegram.client_id
-    assert content["telegram"]["token"] == telegram.token
     assert content["binance_config_base_currency"] == data["binance_config_base_currency"]
     assert content["binance_config_quote_currency"] == data["binance_config_quote_currency"]
     assert content["binance_config_granularity"] == data["binance_config_granularity"]
@@ -321,11 +295,6 @@ def test_update_cryptobot_by_user(
 
     assert response.status_code == 200
     assert "id" in content
-    assert content["binance_account"]["binance_api_url"] == binance_account.binance_api_url
-    assert content["binance_account"]["binance_api_key"] == binance_account.binance_api_key
-    assert content["binance_account"]["binance_api_secret"] == binance_account.binance_api_secret
-    assert content["telegram"]["client_id"] == telegram.client_id
-    assert content["telegram"]["token"] == telegram.token
     assert content["binance_config_base_currency"] == data["binance_config_base_currency"]
     assert content["binance_config_quote_currency"] == data["binance_config_quote_currency"]
     assert content["binance_config_granularity"] == data["binance_config_granularity"]

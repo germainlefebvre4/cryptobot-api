@@ -8,6 +8,7 @@ import requests
 from typing import Any, List, Optional, Dict
 
 from fastapi import APIRouter, Depends, HTTPException, Query, Request, Response
+from fastapi.encoders import jsonable_encoder
 from sqlalchemy.orm import Session
 from app.core.config import settings
 
@@ -36,8 +37,20 @@ def read_cryptobots(
         cryptobots = crud.cryptobot.get_multi_by_user(
             db=db, user_id=current_user.id, skip=skip, limit=limit
         )
+    
+    cryptobots_last_action = []
+    for cryptobot in cryptobots:
+        last_action = dict(last_action="BUY")
+        last_action_event = services.get_last_user_trade_event(
+            base_currency=cryptobot.binance_config_base_currency,
+            quote_currency=cryptobot.binance_config_quote_currency,
+            user_id=current_user.id,
+        )
+        last_action = dict(last_action=last_action_event)
+        cryptobot_last_action = {**jsonable_encoder(cryptobot), **last_action}
+        cryptobots_last_action.append(cryptobot_last_action)
 
-    return cryptobots
+    return cryptobots_last_action
 
 
 @router.post("/", response_model=schemas.Cryptobot)
