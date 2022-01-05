@@ -37,6 +37,27 @@ def read_cryptobots(
         cryptobots = crud.cryptobot.get_multi_by_user(
             db=db, user_id=current_user.id, skip=skip, limit=limit
         )
+
+    return cryptobots
+
+
+
+@router.get("/_last_action", response_model=List[schemas.Cryptobot])
+def read_cryptobots_with_last_action(
+    db: Session = Depends(deps.get_db),
+    skip: int = 0,
+    limit: int = 100,
+    current_user: models.User = Depends(deps.get_current_active_user),
+) -> Any:
+    """
+    Retrieve cryptobots.
+    """
+    if crud.user.is_superuser(current_user):
+        cryptobots = crud.cryptobot.get_multi(db, skip=skip, limit=limit)
+    else:
+        cryptobots = crud.cryptobot.get_multi_by_user(
+            db=db, user_id=current_user.id, skip=skip, limit=limit
+        )
     
     cryptobots_last_action = []
     for cryptobot in cryptobots:

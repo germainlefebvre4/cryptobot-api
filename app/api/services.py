@@ -212,17 +212,20 @@ def get_last_user_trade(base_currency: str, quote_currency: str, user_id: int):
                 "?user_id=" + str(user_id),
         )
     except:
+        return None
         raise HTTPException(status_code=404, detail="An error occured on retrieving last trades")
 
     if r.status_code == 200:
         return r.json()
     else:
+        return None
         raise Exception(f"Error getting current price for {base_currency}/{quote_currency}")
 
 
 def get_last_user_trade_event(base_currency: str, quote_currency: str, user_id: int):
     res = get_last_user_trade(base_currency, quote_currency, user_id)
-    if res["isBuyer"]:
-        return "BUY"
-    else:
-        return "SELL"
+    if res:
+        if res["isBuyer"]:
+            return "BUY"
+        else:
+            return "SELL"
